@@ -5,7 +5,8 @@
   "main": "./app/src/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "http-server": "./node_modules/.bin/http-server"
+    "http-server": "./node_modules/.bin/http-server",
+    "watch": "./node_modules/.bin/webpack --watch --progress --mode=development"
   },
   "repository": {
     "type": "git",
@@ -14,7 +15,12 @@
   "author": "large64",
   "license": "ISC",
   "dependencies": {
-    "http-server": "^0.11.1",
     "pixi.js": "4.7.1"
+  },
+  "devDependencies": {
+    "copy-webpack-plugin": "4.5.1",
+    "http-server": "^0.11.1",
+    "webpack": "4.1.1",
+    "webpack-cli": "2.0.12"
   }
 }
