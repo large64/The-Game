@@ -1,0 +1,20 @@
+{
+  "name": "the-game",
+  "version": "1.0.0",
+  "description": "A simple side scroller shoot'em up game with space ships",
+  "main": "./app/src/app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "http-server": "./node_modules/.bin/http-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://large64.ddns.net:3000/Large64/the-game.git"
+  },
+  "author": "large64",
+  "license": "ISC",
+  "dependencies": {
+    "http-server": "^0.11.1",
+    "pixi.js": "4.7.1"
+  }
+}
