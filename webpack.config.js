@@ -9,6 +9,9 @@ module.exports = {
     path: path.resolve(__dirname, 'dist')
     },
     plugins: [
-        new CopyWebpackPlugin([{from: './app/index.html', to: 'index.html'}])
+        new CopyWebpackPlugin([
+            {from: './app/index.html', to: 'index.html'},
+            {from: './app/assets/images', to: 'assets/images'}
+        ])
     ]
 };
