@@ -12,10 +12,10 @@ export default class ParallaxScroller {
 
     init(stage) {
         const farBackgroundTexture = PIXI.loader.resources['farBackground'].texture;
-        this.farBackgroundLayer = new FarBackgroundLayer(farBackgroundTexture);
+        this.farBackgroundLayer = new FarBackgroundLayer(farBackgroundTexture, ParallaxScroller.DELTA_X_FAR);
 
         const closeBackgroundTexture = PIXI.loader.resources['closeBackground'].texture;
-        this.closeBackgroundLayer= new CloseBackgroundLayer(closeBackgroundTexture);
+        this.closeBackgroundLayer= new CloseBackgroundLayer(closeBackgroundTexture, ParallaxScroller.DELTA_X_CLOSE);
 
         stage.addChild(this.farBackgroundLayer);
         stage.addChild(this.closeBackgroundLayer);
@@ -27,12 +27,11 @@ export default class ParallaxScroller {
         this.closeBackgroundLayer.setViewportX(viewportX);
     }
 
-    getViewportX() {
-        return this.viewportX;
-    }
-
     moveViewportXBy(units) {
         const newViewportX = this.viewportX + units;
         this.setViewportX(newViewportX);
     }
 }
+
+ParallaxScroller.DELTA_X_FAR = 0.64;
+ParallaxScroller.DELTA_X_CLOSE = 0.128;
