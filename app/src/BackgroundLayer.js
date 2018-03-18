@@ -1,8 +1,10 @@
 import * as PIXI from 'pixi.js';
 
-export default class FarBackgroundLayer extends PIXI.extras.TilingSprite {
+import Config from './Config';
+
+export default class BackgroundLayer extends PIXI.extras.TilingSprite {
     constructor(texture, deltaX) {
-        super(texture, 800, 600);
+        super(texture, Config.WINDOW_WIDTH, Config.WINDOW_HEIGHT);
 
         this.position.set(0);
         this.tilePosition.set(0);

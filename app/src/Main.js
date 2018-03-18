@@ -1,11 +1,12 @@
 import * as PIXI from 'pixi.js';
 
 import ParallaxScroller from './ParallaxScroller';
+import Config from './Config';
 
 export default class Main {
     constructor() {
         this.stage = new PIXI.Container();
-        this.renderer = PIXI.autoDetectRenderer(800, 600, {
+        this.renderer = PIXI.autoDetectRenderer(Config.WINDOW_WIDTH, Config.WINDOW_HEIGHT, {
             view: document.getElementById('app'),
             transparent: false,
         });
@@ -20,18 +21,23 @@ export default class Main {
             .load(this.onAssetsLoaded.bind(this));
     }
 
+    static createAnimationFromFrames(numberOfFrames, imageName, imageExtension) {
+        const frames = [];
+
+        for (let i = 0; i < numberOfFrames; i++) {
+            frames.push(PIXI.Texture.fromFrame(imageName + i + '.' + imageExtension));
+        }
+
+        return new PIXI.extras.AnimatedSprite(frames);
+    }
+
     onAssetsLoaded() {
         this.parallaxScroller.init(this.stage);
 
-        const spaceshipAnimationFrames = [];
-
-        for (let i = 0; i < 4; i++) {
-            spaceshipAnimationFrames.push(PIXI.Texture.fromFrame('spaceship' + i + '.png'));
-        }
-
-        const spaceshipAnimation = new PIXI.extras.AnimatedSprite(spaceshipAnimationFrames);
+        const spaceshipAnimation = Main.createAnimationFromFrames(4, 'spaceship', 'png');
         spaceshipAnimation.animationSpeed = 0.3;
         spaceshipAnimation.play();
+
         this.stage.addChild(spaceshipAnimation);
 
         requestAnimationFrame(this.update.bind(this));

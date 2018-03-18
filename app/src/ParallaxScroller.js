@@ -1,7 +1,6 @@
 import * as PIXI from "pixi.js";
 
-import FarBackgroundLayer from './FarBackgroundLayer';
-import CloseBackgroundLayer from "./CloseBackgroundLayer";
+import BackgroundLayer from './BackgroundLayer';
 
 export default class ParallaxScroller {
     constructor() {
@@ -12,10 +11,10 @@ export default class ParallaxScroller {
 
     init(stage) {
         const farBackgroundTexture = PIXI.loader.resources['farBackground'].texture;
-        this.farBackgroundLayer = new FarBackgroundLayer(farBackgroundTexture, ParallaxScroller.DELTA_X_FAR);
+        this.farBackgroundLayer = new BackgroundLayer(farBackgroundTexture, ParallaxScroller.DELTA_X_FAR);
 
         const closeBackgroundTexture = PIXI.loader.resources['closeBackground'].texture;
-        this.closeBackgroundLayer= new CloseBackgroundLayer(closeBackgroundTexture, ParallaxScroller.DELTA_X_CLOSE);
+        this.closeBackgroundLayer= new BackgroundLayer(closeBackgroundTexture, ParallaxScroller.DELTA_X_CLOSE);
 
         stage.addChild(this.farBackgroundLayer);
         stage.addChild(this.closeBackgroundLayer);
