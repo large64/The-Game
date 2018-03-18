@@ -17,4 +17,4 @@ export default class FarBackgroundLayer extends PIXI.extras.TilingSprite {
     }
 }
 
-FarBackgroundLayer.DELTA_X = 0.128;
+FarBackgroundLayer.DELTA_X = 0.64;
