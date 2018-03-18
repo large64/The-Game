@@ -16,6 +16,7 @@ export default class Main {
         PIXI.loader
             .add('assets/sprites/spaceship.json')
             .add('farBackground', 'assets/images/far_background.png')
+            .add('closeBackground', 'assets/images/close_background.png')
             .load(this.onAssetsLoaded.bind(this));
     }
 
@@ -37,10 +38,10 @@ export default class Main {
     }
 
     update() {
-        this.parallaxScroller.moveViewportXBy(Main.FAR_SCROLL_SPEED);
+        this.parallaxScroller.moveViewportXBy(Main.SCROLL_SPEED);
         this.renderer.render(this.stage);
         requestAnimationFrame(this.update.bind(this));
     }
 }
 
-Main.FAR_SCROLL_SPEED = 2;
+Main.SCROLL_SPEED = 2;
