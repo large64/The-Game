@@ -23,20 +23,21 @@ export default class Main {
             .load(this.onAssetsLoaded.bind(this));
     }
 
-    createPlayerSprite(numberOfFrames, imageName, imageExtension) {
+    static createPlayerSprite(numberOfFrames, imageName, imageExtension) {
         const frames = [];
 
         for (let i = 0; i < numberOfFrames; i++) {
             frames.push(PIXI.Texture.fromFrame(imageName + i + '.' + imageExtension));
         }
 
-        this.player = new Player(frames);
+        return new Player(frames);
     }
 
     onAssetsLoaded() {
         this.parallaxScroller.init(this.stage);
+        this.app.renderer.backgroundColor = 0x2E2E2E;
 
-        this.createPlayerSprite(4, 'spaceship', 'png');
+        this.player = Main.createPlayerSprite(4, 'spaceship', 'png');
         this.stage.addChild(this.player);
 
         document.body.appendChild(this.app.view);
@@ -45,8 +46,18 @@ export default class Main {
 
     update(delta) {
         this.parallaxScroller.moveViewportXBy(Main.SCROLL_SPEED);
-        this.player.position.x += this.player.vx;
-        this.player.position.y += this.player.vy;
+        this.handlePlayerMovement();
+    }
+
+    handlePlayerMovement() {
+        if (this.player.position.y > 0 && this.player.vy < 0
+            || this.player.position.y < (Config.WINDOW_HEIGHT - this.player.height) && this.player.vy > 0) {
+            this.player.position.y += this.player.vy;
+        }
+        if (this.player.position.x > 0 && this.player.vx < 0
+            || this.player.position.x < (Config.WINDOW_WIDTH - this.player.width) && this.player.vx > 0) {
+            this.player.position.x += this.player.vx;
+        }
     }
 }
 

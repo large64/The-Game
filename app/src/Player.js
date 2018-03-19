@@ -1,6 +1,7 @@
 import * as PIXI from "pixi.js";
 
 import KeyHandler from "./KeyHandler";
+import Config from "./Config";
 
 export default class Player extends PIXI.extras.AnimatedSprite {
     constructor(frames) {
@@ -8,6 +9,7 @@ export default class Player extends PIXI.extras.AnimatedSprite {
         this.animationSpeed = Player.ANIMATION_SPEED;
         this.vx = 0;
         this.vy = 0;
+        this.position.y = (Config.WINDOW_HEIGHT / 2) - (this.height / 2);
         this.play();
 
         this.setKeyHandlers();
