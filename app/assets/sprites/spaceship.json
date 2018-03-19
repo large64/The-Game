@@ -5,7 +5,7 @@
         "x": 0,
         "y": 0,
         "w": 96,
-        "h": 96
+        "h": 48
       },
       "rotated": false,
       "trimmed": false,
@@ -13,19 +13,19 @@
         "x": 0,
         "y": 0,
         "w": 96,
-        "h": 96
+        "h": 48
       },
       "sourceSize": {
         "w": 96,
-        "h": 96
+        "h": 48
       }
     },
     "spaceship1.png": {
       "frame": {
-        "x": 96,
-        "y": 0,
+        "x": 0,
+        "y": 48,
         "w": 96,
-        "h": 96
+        "h": 48
       },
       "rotated": false,
       "trimmed": false,
@@ -33,11 +33,11 @@
         "x": 0,
         "y": 0,
         "w": 96,
-        "h": 96
+        "h": 48
       },
       "sourceSize": {
         "w": 96,
-        "h": 96
+        "h": 48
       }
     },
     "spaceship2.png": {
@@ -45,7 +45,7 @@
         "x": 0,
         "y": 96,
         "w": 96,
-        "h": 96
+        "h": 48
       },
       "rotated": false,
       "trimmed": false,
@@ -53,19 +53,19 @@
         "x": 0,
         "y": 0,
         "w": 96,
-        "h": 96
+        "h": 48
       },
       "sourceSize": {
         "w": 96,
-        "h": 96
+        "h": 48
       }
     },
     "spaceship3.png": {
       "frame": {
-        "x": 96,
-        "y": 96,
+        "x": 0,
+        "y": 144,
         "w": 96,
-        "h": 96
+        "h": 48
       },
       "rotated": false,
       "trimmed": false,
@@ -73,11 +73,11 @@
         "x": 0,
         "y": 0,
         "w": 96,
-        "h": 96
+        "h": 48
       },
       "sourceSize": {
         "w": 96,
-        "h": 96
+        "h": 48
       }
     }
   },
@@ -87,7 +87,7 @@
     "image": "spaceship.png",
     "format": "RGBA8888",
     "size": {
-      "w": 192,
+      "w": 96,
       "h": 192
     }
   }
