@@ -1,0 +1,94 @@
+{
+  "frames": {
+    "rocket0.png": {
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 67,
+        "h": 10
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 67,
+        "h": 10
+      },
+      "sourceSize": {
+        "w": 67,
+        "h": 10
+      }
+    },
+    "rocket1.png": {
+      "frame": {
+        "x": 0,
+        "y": 10,
+        "w": 67,
+        "h": 10
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 67,
+        "h": 10
+      },
+      "sourceSize": {
+        "w": 67,
+        "h": 10
+      }
+    },
+    "rocket2.png": {
+      "frame": {
+        "x": 0,
+        "y": 20,
+        "w": 67,
+        "h": 10
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 67,
+        "h": 10
+      },
+      "sourceSize": {
+        "w": 67,
+        "h": 10
+      }
+    },
+    "rocket3.png": {
+      "frame": {
+        "x": 0,
+        "y": 30,
+        "w": 67,
+        "h": 10
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 67,
+        "h": 10
+      },
+      "sourceSize": {
+        "w": 67,
+        "h": 10
+      }
+    }
+  },
+  "meta": {
+    "app": "https://github.com/piskelapp/piskel/",
+    "version": "1.0",
+    "image": "rocket.png",
+    "format": "RGBA8888",
+    "size": {
+      "w": 67,
+      "h": 40
+    }
+  }
+}
