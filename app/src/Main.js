@@ -41,10 +41,10 @@ export default class Main {
         this.stage.addChild(this.player);
 
         document.body.appendChild(this.app.view);
-        this.app.ticker.add((delta) => this.update(delta));
+        this.app.ticker.add(() => this.update());
     }
 
-    update(delta) {
+    update() {
         this.parallaxScroller.moveViewportXBy(Main.SCROLL_SPEED);
         this.handlePlayerMovement();
     }
