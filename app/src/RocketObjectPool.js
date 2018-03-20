@@ -5,7 +5,7 @@ export default class RocketObjectPool {
     constructor() {
         this.items = [];
         for (let i = 0; i < 10; i++) {
-            const rocketFrames = Helpers.collectAnimatedSpriteFrames(4, 'rocket', 'png');
+            const rocketFrames = Helpers.collectAnimatedSpriteFrames(7, 'rocket', 'png');
             const rocket = new Rocket(rocketFrames);
             this.items.push(rocket);
         }

@@ -4,7 +4,7 @@
       "frame": {
         "x": 0,
         "y": 0,
-        "w": 67,
+        "w": 50,
         "h": 10
       },
       "rotated": false,
@@ -12,11 +12,11 @@
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 67,
+        "w": 50,
         "h": 10
       },
       "sourceSize": {
-        "w": 67,
+        "w": 50,
         "h": 10
       }
     },
@@ -24,7 +24,7 @@
       "frame": {
         "x": 0,
         "y": 10,
-        "w": 67,
+        "w": 50,
         "h": 10
       },
       "rotated": false,
@@ -32,11 +32,11 @@
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 67,
+        "w": 50,
         "h": 10
       },
       "sourceSize": {
-        "w": 67,
+        "w": 50,
         "h": 10
       }
     },
@@ -44,7 +44,7 @@
       "frame": {
         "x": 0,
         "y": 20,
-        "w": 67,
+        "w": 50,
         "h": 10
       },
       "rotated": false,
@@ -52,11 +52,11 @@
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 67,
+        "w": 50,
         "h": 10
       },
       "sourceSize": {
-        "w": 67,
+        "w": 50,
         "h": 10
       }
     },
@@ -64,7 +64,7 @@
       "frame": {
         "x": 0,
         "y": 30,
-        "w": 67,
+        "w": 50,
         "h": 10
       },
       "rotated": false,
@@ -72,11 +72,71 @@
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 67,
+        "w": 50,
         "h": 10
       },
       "sourceSize": {
-        "w": 67,
+        "w": 50,
+        "h": 10
+      }
+    },
+    "rocket4.png": {
+      "frame": {
+        "x": 0,
+        "y": 40,
+        "w": 50,
+        "h": 10
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 50,
+        "h": 10
+      },
+      "sourceSize": {
+        "w": 50,
+        "h": 10
+      }
+    },
+    "rocket5.png": {
+      "frame": {
+        "x": 0,
+        "y": 50,
+        "w": 50,
+        "h": 10
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 50,
+        "h": 10
+      },
+      "sourceSize": {
+        "w": 50,
+        "h": 10
+      }
+    },
+    "rocket6.png": {
+      "frame": {
+        "x": 0,
+        "y": 60,
+        "w": 50,
+        "h": 10
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 50,
+        "h": 10
+      },
+      "sourceSize": {
+        "w": 50,
         "h": 10
       }
     }
@@ -87,8 +147,8 @@
     "image": "rocket.png",
     "format": "RGBA8888",
     "size": {
-      "w": 67,
-      "h": 40
+      "w": 50,
+      "h": 70
     }
   }
 }
