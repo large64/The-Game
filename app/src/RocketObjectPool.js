@@ -1,5 +1,5 @@
 import Helpers from "./Helpers";
-import Rocket from "./Rocket";
+import Rocket from "./AnimatedSprites/Rocket";
 
 export default class RocketObjectPool {
     constructor() {

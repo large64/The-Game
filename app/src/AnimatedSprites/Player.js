@@ -1,7 +1,7 @@
 import * as PIXI from "pixi.js";
 
-import KeyHandler from "./KeyHandler";
-import Config from "./Config";
+import KeyHandler from "../KeyHandler";
+import Config from "../Config";
 
 export default class Player extends PIXI.extras.AnimatedSprite {
     constructor(frames) {

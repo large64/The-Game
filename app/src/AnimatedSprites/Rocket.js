@@ -7,8 +7,6 @@ export default class Rocket extends PIXI.extras.AnimatedSprite {
         this.vx = Rocket.MOVING_SPEED;
         this.position.y = 100;
         this.play();
-
-        Rocket.COUNTER++;
     }
 }
 

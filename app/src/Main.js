@@ -2,7 +2,7 @@ import * as PIXI from 'pixi.js';
 
 import ParallaxScroller from './ParallaxScroller';
 import Config from './Config';
-import Player from "./Player";
+import Player from "./AnimatedSprites/Player";
 import Helpers from './Helpers';
 import KeyHandler from "./KeyHandler";
 import RocketObjectPool from "./RocketObjectPool";
@@ -35,7 +35,7 @@ export default class Main {
         this.app.renderer.backgroundColor = 0x2E2E2E;
 
         this.player = new Player(Helpers.collectAnimatedSpriteFrames(4, 'spaceship', 'png'));
-        this.initializeSpaceHandler();
+        this.setSpaceHandler();
 
         this.stage.addChild(this.player);
 
@@ -49,16 +49,16 @@ export default class Main {
         this.handleRocketMovement();
     }
 
-    initializeSpaceHandler() {
+    setSpaceHandler() {
         let spaceKeyHandler = new KeyHandler(32);
-        spaceKeyHandler.onPress = this.fireRocket();
+        spaceKeyHandler.onPress = () => this.fireRocket();
     }
 
     fireRocket() {
         const rocket = this.rocketObjectPool.borrow();
         if (rocket) {
             rocket.position.y = this.player.position.y + this.player.height - rocket.height;
-            rocket.position.x = 0;
+            rocket.position.x = this.player.position.x;
             this.stage.addChild(rocket);
             this.visibleRockets.push(rocket);
         }
