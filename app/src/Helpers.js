@@ -20,4 +20,14 @@ export default class Helpers {
             .add('closeBackground', 'assets/images/close_background.png')
             .load(onReadyCallback);
     }
+
+    /**
+     * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
+     */
+    static getRandomInteger(minimumValue, maximumValue) {
+        minimumValue = Math.ceil(minimumValue);
+        maximumValue = Math.floor(maximumValue);
+
+        return Math.floor(Math.random() * (maximumValue - minimumValue + 1)) + minimumValue;
+    }
 }

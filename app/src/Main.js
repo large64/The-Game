@@ -5,8 +5,8 @@ import Config from './Config';
 import Player from "./AnimatedSprites/Player";
 import Helpers from './Helpers';
 import KeyHandler from "./KeyHandler";
-import RocketObjectPool from "./RocketObjectPool";
-import SpaceshipEnemy from "./AnimatedSprites/SpaceshipEnemy";
+import RocketObjectPool from "./ObjectPools/RocketObjectPool";
+import SpaceshipEnemyObjectPool from './ObjectPools/SpaceshipEnemyObjectPool';
 
 export default class Main {
     constructor() {
@@ -19,19 +19,25 @@ export default class Main {
 
         this.parallaxScroller = new ParallaxScroller();
         this.player = null;
+
         this.visibleRockets = [];
+        this.visibleSpaceshipEnemies = [];
+
         this.rocketObjectPool = null;
+        this.spaceshipEnemyObjectPool = null;
 
         Helpers.loadAssets(this.onAssetsLoaded.bind(this));
     }
 
     onAssetsLoaded() {
         this.rocketObjectPool = new RocketObjectPool();
+        this.spaceshipEnemyObjectPool = new SpaceshipEnemyObjectPool();
         this.parallaxScroller.init(this.stage);
         this.app.renderer.backgroundColor = 0x2E2E2E;
 
         this.player = new Player(Helpers.collectAnimatedSpriteFrames(4, 'spaceship', 'png'));
         this.setSpaceHandler();
+        this.setSpaceshipEnemySpawner();
 
         this.stage.addChild(this.player);
 
@@ -43,6 +49,11 @@ export default class Main {
         this.parallaxScroller.moveViewportXBy(Main.SCROLL_SPEED);
         this.handlePlayerMovement();
         this.handleRocketMovement();
+        this.handleSpaceshipEnemyMovement();
+    }
+
+    setSpaceshipEnemySpawner() {
+        setInterval(this.addSpaceshipEnemy.bind(this), Config.ENEMY_SPAWN_INTERVAL_SECONDS * 1000);
     }
 
     setSpaceHandler() {
@@ -57,6 +68,16 @@ export default class Main {
             rocket.position.x = this.player.position.x;
             this.stage.addChild(rocket);
             this.visibleRockets.push(rocket);
+        }
+    }
+
+    addSpaceshipEnemy() {
+        const spaceshipEnemy = this.spaceshipEnemyObjectPool.borrow();
+        if (spaceshipEnemy) {
+            spaceshipEnemy.position.y = Helpers.getRandomInteger(0, Config.WINDOW_HEIGHT);
+            spaceshipEnemy.position.x = Config.WINDOW_WIDTH;
+            this.stage.addChild(spaceshipEnemy);
+            this.visibleSpaceshipEnemies.push(spaceshipEnemy);
         }
     }
 
@@ -83,6 +104,19 @@ export default class Main {
             }
         }
     }
+
+    handleSpaceshipEnemyMovement() {
+        for (let i = 0; i < this.visibleSpaceshipEnemies.length; i++) {
+            const spaceshipEnemy = this.visibleSpaceshipEnemies[i];
+            spaceshipEnemy.position.x += spaceshipEnemy.vx;
+
+            if (spaceshipEnemy.position.x < 0) {
+                this.visibleSpaceshipEnemies.splice(i, 1);
+                this.stage.removeChild(spaceshipEnemy);
+                this.spaceshipEnemyObjectPool.handBack(spaceshipEnemy);
+            }
+        }
+    }
 }
 
-Main.SCROLL_SPEED = 5;
+Main.SCROLL_SPEED = 3;

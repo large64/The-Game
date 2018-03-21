@@ -11,4 +11,4 @@ export default class SpaceshipEnemy extends PIXI.extras.AnimatedSprite {
 }
 
 SpaceshipEnemy.ANIMATION_SPEED = 0.3;
-SpaceshipEnemy.MOVING_SPEED = 0;
+SpaceshipEnemy.MOVING_SPEED = -3;
