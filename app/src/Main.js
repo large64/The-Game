@@ -32,6 +32,7 @@ export default class Main {
     onAssetsLoaded() {
         this.rocketObjectPool = new RocketObjectPool();
         this.spaceshipEnemyObjectPool = new SpaceshipEnemyObjectPool();
+
         this.parallaxScroller.init(this.stage);
         this.app.renderer.backgroundColor = 0x2E2E2E;
 
@@ -74,7 +75,7 @@ export default class Main {
     addSpaceshipEnemy() {
         const spaceshipEnemy = this.spaceshipEnemyObjectPool.borrow();
         if (spaceshipEnemy) {
-            spaceshipEnemy.position.y = Helpers.getRandomInteger(0, Config.WINDOW_HEIGHT);
+            spaceshipEnemy.position.y = Helpers.getRandomInteger(0, Config.WINDOW_HEIGHT - spaceshipEnemy.height);
             spaceshipEnemy.position.x = Config.WINDOW_WIDTH;
             this.stage.addChild(spaceshipEnemy);
             this.visibleSpaceshipEnemies.push(spaceshipEnemy);
