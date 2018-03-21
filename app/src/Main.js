@@ -111,7 +111,7 @@ export default class Main {
             const spaceshipEnemy = this.visibleSpaceshipEnemies[i];
             spaceshipEnemy.position.x += spaceshipEnemy.vx;
 
-            if (spaceshipEnemy.position.x < 0) {
+            if (spaceshipEnemy.position.x < 0 - spaceshipEnemy.width) {
                 this.visibleSpaceshipEnemies.splice(i, 1);
                 this.stage.removeChild(spaceshipEnemy);
                 this.spaceshipEnemyObjectPool.handBack(spaceshipEnemy);
