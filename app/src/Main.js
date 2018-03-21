@@ -1,5 +1,4 @@
 import * as PIXI from 'pixi.js';
-import {forEach, filter} from 'lodash';
 
 import ParallaxScroller from './ParallaxScroller';
 import Config from './Config';
@@ -51,7 +50,9 @@ export default class Main {
         this.parallaxScroller.moveViewportXBy(Main.SCROLL_SPEED);
         this.handlePlayerMovement();
 
-        forEach(this.stage.children, (child) => {
+        for (let i = 0; i < this.stage.children.length; i++) {
+            const child = this.stage.children[i];
+
             if (!child) {
                 return;
             }
@@ -59,15 +60,13 @@ export default class Main {
             switch (child.constructor) {
                 case Rocket:
                     this.handleRocketMovement(child);
-                    this.handleRocketCollision(child, filter(
-                        this.stage.children, (filteredChild) => filteredChild.constructor === SpaceshipEnemy)
-                    );
+                    this.handleRocketCollision(child, this.stage.children.filter((filteredChild) => filteredChild.constructor === SpaceshipEnemy));
                     break;
                 case SpaceshipEnemy:
                     this.handleSpaceshipEnemyMovement(child);
                     break;
             }
-        });
+        }
     }
 
     setSpaceshipEnemySpawner() {
@@ -128,12 +127,13 @@ export default class Main {
     }
 
     handleRocketCollision(rocket, spaceShipEnemies) {
-        forEach(spaceShipEnemies, (spaceshipEnemy) => {
+        for (let i = 0; i < spaceShipEnemies.length; i++) {
+            const spaceshipEnemy = spaceShipEnemies[i];
             if (Helpers.hitTestRectangle(rocket, spaceshipEnemy)) {
                 this.removeSprite(spaceshipEnemy, 'spaceshipEnemies');
                 this.removeSprite(rocket, 'rockets');
             }
-        });
+        }
     }
 
     removeSprite(sprite, objectPool) {
