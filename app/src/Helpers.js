@@ -10,4 +10,13 @@ export default class Helpers {
 
         return frames;
     }
+
+    static loadAssets(onReadyCallback) {
+        PIXI.loader
+            .add('assets/sprites/spaceship.json')
+            .add('assets/sprites/rocket.json')
+            .add('farBackground', 'assets/images/far_background.png')
+            .add('closeBackground', 'assets/images/close_background.png')
+            .load(onReadyCallback);
+    }
 }

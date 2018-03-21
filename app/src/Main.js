@@ -21,12 +21,7 @@ export default class Main {
         this.visibleRockets = [];
         this.rocketObjectPool = null;
 
-        PIXI.loader
-            .add('assets/sprites/spaceship.json')
-            .add('assets/sprites/rocket.json')
-            .add('farBackground', 'assets/images/far_background.png')
-            .add('closeBackground', 'assets/images/close_background.png')
-            .load(this.onAssetsLoaded.bind(this));
+        Helpers.loadAssets(this.onAssetsLoaded.bind(this));
     }
 
     onAssetsLoaded() {
