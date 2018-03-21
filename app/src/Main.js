@@ -6,6 +6,7 @@ import Player from "./AnimatedSprites/Player";
 import Helpers from './Helpers';
 import KeyHandler from "./KeyHandler";
 import RocketObjectPool from "./RocketObjectPool";
+import SpaceshipEnemy from "./AnimatedSprites/SpaceshipEnemy";
 
 export default class Main {
     constructor() {

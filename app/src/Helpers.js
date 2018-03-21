@@ -14,6 +14,7 @@ export default class Helpers {
     static loadAssets(onReadyCallback) {
         PIXI.loader
             .add('assets/sprites/spaceship.json')
+            .add('assets/sprites/spaceship_enemy.json')
             .add('assets/sprites/rocket.json')
             .add('farBackground', 'assets/images/far_background.png')
             .add('closeBackground', 'assets/images/close_background.png')
