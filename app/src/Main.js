@@ -1,4 +1,5 @@
 import * as PIXI from 'pixi.js';
+import {pull} from 'lodash';
 
 import ParallaxScroller from './ParallaxScroller';
 import Config from './Config';
@@ -75,7 +76,10 @@ export default class Main {
     addSpaceshipEnemy() {
         const spaceshipEnemy = this.spaceshipEnemyObjectPool.borrow();
         if (spaceshipEnemy) {
-            spaceshipEnemy.position.y = Helpers.getRandomInteger(0, Config.WINDOW_HEIGHT - spaceshipEnemy.height);
+            spaceshipEnemy.position.y = Helpers.getRandomInteger(
+                spaceshipEnemy.height,
+                Config.WINDOW_HEIGHT - spaceshipEnemy.height
+            );
             spaceshipEnemy.position.x = Config.WINDOW_WIDTH;
             this.stage.addChild(spaceshipEnemy);
             this.visibleSpaceshipEnemies.push(spaceshipEnemy);
@@ -98,10 +102,10 @@ export default class Main {
             const rocket = this.visibleRockets[i];
             rocket.position.x += rocket.vx;
 
+            this.handleRocketCollision(rocket);
+
             if (rocket.position.x > Config.WINDOW_WIDTH) {
-                this.visibleRockets.splice(i, 1);
-                this.stage.removeChild(rocket);
-                this.rocketObjectPool.handBack(rocket);
+                this.removeRocket(rocket);
             }
         }
     }
@@ -112,11 +116,31 @@ export default class Main {
             spaceshipEnemy.position.x += spaceshipEnemy.vx;
 
             if (spaceshipEnemy.position.x < 0 - spaceshipEnemy.width) {
-                this.visibleSpaceshipEnemies.splice(i, 1);
-                this.stage.removeChild(spaceshipEnemy);
-                this.spaceshipEnemyObjectPool.handBack(spaceshipEnemy);
+                this.removeSpaceshipEnemy(spaceshipEnemy)
             }
         }
+    }
+
+    handleRocketCollision(rocket) {
+        for (let j = 0; j < this.visibleSpaceshipEnemies.length; j++) {
+            const spaceshipEnemy = this.visibleSpaceshipEnemies[j];
+            if (Helpers.hitTestRectangle(rocket, spaceshipEnemy)) {
+                this.removeRocket(rocket);
+                this.removeSpaceshipEnemy(spaceshipEnemy);
+            }
+        }
+    }
+
+    removeRocket(rocket) {
+        pull(this.visibleRockets, rocket);
+        this.stage.removeChild(rocket);
+        this.rocketObjectPool.handBack(rocket);
+    }
+
+    removeSpaceshipEnemy(spaceshipEnemy) {
+        pull(this.visibleSpaceshipEnemies, spaceshipEnemy);
+        this.stage.removeChild(spaceshipEnemy);
+        this.spaceshipEnemyObjectPool.handBack(spaceshipEnemy);
     }
 }
 
