@@ -15,12 +15,12 @@
   "author": "large64",
   "license": "ISC",
   "dependencies": {
-    "pixi.js": "4.7.1"
-  },
-  "devDependencies": {
     "copy-webpack-plugin": "4.5.1",
-    "http-server": "^0.11.1",
+    "pixi.js": "4.7.1",
     "webpack": "4.1.1",
     "webpack-cli": "2.0.12"
+  },
+  "devDependencies": {
+    "http-server": "^0.11.1"
   }
 }
