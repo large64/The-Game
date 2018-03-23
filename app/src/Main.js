@@ -1,4 +1,5 @@
 import * as PIXI from 'pixi.js';
+import * as PIXI_PARTICLES from 'pixi-particles';
 
 import ParallaxScroller from './ParallaxScroller';
 import Config from './Config';
@@ -9,6 +10,7 @@ import RocketObjectPool from "./ObjectPools/RocketObjectPool";
 import SpaceshipEnemyObjectPool from './ObjectPools/SpaceshipEnemyObjectPool';
 import Rocket from "./AnimatedSprites/Rocket";
 import SpaceshipEnemy from "./AnimatedSprites/SpaceshipEnemy";
+import SpaceshipEnemyEmitterData from './EmitterData/SpaceshipEnemyEmitterData.json';
 
 export default class Main {
     constructor() {
@@ -18,8 +20,11 @@ export default class Main {
         });
 
         this.stage = this.app.stage;
+        this.spaceshipEnemyEmitter = null;
+        this.particleContainer = null;
 
         this.parallaxScroller = new ParallaxScroller();
+        this.elapsed = null;
         this.player = null;
 
         this.objectPools = {};
@@ -42,13 +47,26 @@ export default class Main {
 
         this.stage.addChild(this.player);
 
+        this.particleContainer = new PIXI.particles.ParticleContainer();
+        this.stage.addChild(this.particleContainer);
+        this.spaceshipEnemyEmitter = new PIXI.particles.Emitter(this.particleContainer, [PIXI.loader.resources['spaceshipEnemyParticle'].texture], SpaceshipEnemyEmitterData.config);
+        this.spaceshipEnemyEmitter.emit = false;
+        this.elapsed = Date.now();
+
         document.body.appendChild(this.app.view);
+
+
+        console.log(this.spaceshipEnemyEmitter);
         this.app.ticker.add(() => this.update());
     }
 
     update() {
+        const now = Date.now();
         this.parallaxScroller.moveViewportXBy(Main.SCROLL_SPEED);
         this.handlePlayerMovement();
+
+        this.spaceshipEnemyEmitter.update((now - this.elapsed) * 0.001);
+        this.elapsed = now;
 
         for (let i = 0; i < this.stage.children.length; i++) {
             const child = this.stage.children[i];
@@ -130,6 +148,8 @@ export default class Main {
         for (let i = 0; i < spaceShipEnemies.length; i++) {
             const spaceshipEnemy = spaceShipEnemies[i];
             if (Helpers.hitTestRectangle(rocket, spaceshipEnemy)) {
+                this.particleContainer.position = spaceshipEnemy.position;
+                this.spaceshipEnemyEmitter.emit = true;
                 this.removeSprite(spaceshipEnemy, 'spaceshipEnemies');
                 this.removeSprite(rocket, 'rockets');
             }
