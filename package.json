@@ -16,6 +16,7 @@
   "license": "ISC",
   "dependencies": {
     "copy-webpack-plugin": "4.5.1",
+    "pixi-particles": "^3.0.0",
     "pixi.js": "4.7.1",
     "webpack": "4.1.1",
     "webpack-cli": "2.0.12"
