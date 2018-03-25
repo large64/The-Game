@@ -1,27 +1,15 @@
 import * as PIXI from "pixi.js";
 
 import SpaceshipEnemyEmitterData from '../EmitterData/SpaceshipEnemyEmitterData.json';
+import EmittingAnimatedSprite from "./EmittingAnimatedSprite";
 
-export default class SpaceshipEnemy extends PIXI.extras.AnimatedSprite {
+export default class SpaceshipEnemy extends EmittingAnimatedSprite {
     constructor(frames) {
-        super(frames);
+        super(frames, SpaceshipEnemyEmitterData, [PIXI.loader.resources['spaceshipEnemyParticle'].texture]);
         this.animationSpeed = SpaceshipEnemy.ANIMATION_SPEED;
         this.vx = SpaceshipEnemy.MOVING_SPEED;
         this.position.y = 200;
         this.play();
-
-        this.particleContainer = new PIXI.particles.ParticleContainer();
-        this.emitter = new PIXI.particles.Emitter(
-            this.particleContainer,
-            [PIXI.loader.resources['spaceshipEnemyParticle'].texture],
-            SpaceshipEnemyEmitterData.config
-        );
-        this.emitter.autoUpdate = true;
-        this.emitter.emit = false;
-    }
-
-    updateParticleContainerPosition() {
-        this.particleContainer.position = this.position;
     }
 }
 
