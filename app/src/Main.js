@@ -22,6 +22,9 @@ export default class Main {
 
         this.parallaxScroller = new ParallaxScroller();
         this.player = null;
+        this.gameOverScene = Helpers.getGameOverScene();
+        this.gameOverScene.visible = false;
+        this.gameState = null;
 
         this.objectPools = {};
 
@@ -35,24 +38,36 @@ export default class Main {
         };
 
         this.parallaxScroller.init(this.stage);
-        this.addParticleContainers();
 
         this.app.renderer.backgroundColor = 0x2E2E2E;
 
         this.player = new Player(Helpers.collectAnimatedSpriteFrames(4, 'spaceship', 'png'));
+        this.addParticleContainers();
         this.setSpaceHandler();
         this.setSpaceshipEnemySpawner();
 
+        this.stage.addChild(this.gameOverScene);
         this.stage.addChild(this.player);
 
         document.body.appendChild(this.app.view);
 
+        this.gameState = this.play;
         this.app.ticker.add(() => this.update());
     }
 
     update() {
+        this.gameState();
+    }
+
+    play() {
         this.parallaxScroller.moveViewportXBy(Main.SCROLL_SPEED);
+        const visibleSpaceshipEnemies = this.stage.children.filter(
+            (filteredChild) => filteredChild.constructor === SpaceshipEnemy
+        );
+
         this.handlePlayerMovement();
+        this.handlePlayerCollision(visibleSpaceshipEnemies);
+        this.player.updateParticleContainerPosition();
 
         for (let i = 0; i < this.stage.children.length; i++) {
             const child = this.stage.children[i];
@@ -64,7 +79,7 @@ export default class Main {
             switch (child.constructor) {
                 case Rocket:
                     this.handleRocketMovement(child);
-                    this.handleRocketCollision(child, this.stage.children.filter((filteredChild) => filteredChild.constructor === SpaceshipEnemy));
+                    this.handleRocketCollision(child, visibleSpaceshipEnemies);
                     break;
                 case SpaceshipEnemy:
                     this.handleSpaceshipEnemyMovement(child);
@@ -72,6 +87,10 @@ export default class Main {
                     break;
             }
         }
+    }
+
+    end() {
+        this.gameOverScene.visible = true;
     }
 
     setSpaceshipEnemySpawner() {
@@ -129,15 +148,30 @@ export default class Main {
         if (spaceshipEnemy.position.x < 0 - spaceshipEnemy.width) {
             this.removeSprite(spaceshipEnemy, 'spaceshipEnemies');
         }
+
+        spaceshipEnemy.position.y += spaceshipEnemy.pixelsToMoveVertically;
     }
 
-    handleRocketCollision(rocket, spaceShipEnemies) {
-        for (let i = 0; i < spaceShipEnemies.length; i++) {
-            const spaceshipEnemy = spaceShipEnemies[i];
+    handleRocketCollision(rocket, spaceshipEnemies) {
+        for (let i = 0; i < spaceshipEnemies.length; i++) {
+            const spaceshipEnemy = spaceshipEnemies[i];
             if (Helpers.hitTestRectangle(rocket, spaceshipEnemy)) {
                 spaceshipEnemy.emitter.emit = true;
                 this.removeSprite(spaceshipEnemy, 'spaceshipEnemies');
                 this.removeSprite(rocket, 'rockets');
+            }
+        }
+    }
+
+    handlePlayerCollision(spaceshipEnemies) {
+        for (let i = 0; i < spaceshipEnemies.length; i++) {
+            const spaceshipEnemy = spaceshipEnemies[i];
+            if (Helpers.hitTestRectangle(this.player, spaceshipEnemy)) {
+                this.player.emitter.emit = true;
+                spaceshipEnemy.emitter.emit = true;
+                this.stage.removeChild(this.player);
+                this.removeSprite(spaceshipEnemy, 'spaceshipEnemies');
+                this.gameState = this.end;
             }
         }
     }
@@ -152,7 +186,10 @@ export default class Main {
             const spaceshipEnemy = this.objectPools.spaceshipEnemies.items[i];
             this.stage.addChild(spaceshipEnemy.particleContainer);
         }
+
+        this.stage.addChild(this.player.particleContainer);
     }
 }
 
 Main.SCROLL_SPEED = 3;
+Main.GAME_MODE = 1;

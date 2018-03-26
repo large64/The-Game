@@ -1,4 +1,5 @@
 import * as PIXI from "pixi.js";
+import Config from "./Config";
 
 export default class Helpers {
     static collectAnimatedSpriteFrames(numberOfFrames, imageName, imageExtension) {
@@ -17,6 +18,7 @@ export default class Helpers {
             .add('assets/sprites/spaceship_enemy.json')
             .add('assets/sprites/rocket.json')
             .add('spaceshipEnemyParticle', 'assets/images/spaceship_enemy_particle.png')
+            .add('spaceshipParticle', 'assets/images/spaceship_particle.png')
             .add('farBackground', 'assets/images/far_background.png')
             .add('closeBackground', 'assets/images/close_background.png')
             .load(onReadyCallback);
@@ -73,4 +75,21 @@ export default class Helpers {
         //`hit` will be either `true` or `false`
         return hit;
     };
+
+    static getGameOverScene() {
+        const gameOverScene = new PIXI.Container();
+
+        const style = new PIXI.TextStyle({
+            fontFamily: 'Futura',
+            fontSize: 64,
+            fill: 'white'
+        });
+
+        const message = new PIXI.Text('The End!', style);
+        message.x = Config.WINDOW_WIDTH / 2 - message.width / 2;
+        message.y = Config.WINDOW_HEIGHT / 2 - style.fontSize;
+        gameOverScene.addChild(message);
+
+        return gameOverScene;
+    }
 }
