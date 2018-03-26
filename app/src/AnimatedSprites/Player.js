@@ -2,10 +2,12 @@ import * as PIXI from "pixi.js";
 
 import KeyHandler from "../KeyHandler";
 import Config from "../Config";
+import EmittingAnimatedSprite from "./EmittingAnimatedSprite";
+import BlowUpEmitterData from '../EmitterData/BlowUpEmitterData.json';
 
-export default class Player extends PIXI.extras.AnimatedSprite {
+export default class Player extends EmittingAnimatedSprite {
     constructor(frames) {
-        super(frames);
+        super(frames, BlowUpEmitterData, [PIXI.loader.resources['spaceshipParticle'].texture]);
         this.animationSpeed = Player.ANIMATION_SPEED;
         this.vx = 0;
         this.vy = 0;
