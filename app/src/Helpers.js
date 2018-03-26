@@ -76,19 +76,38 @@ export default class Helpers {
         return hit;
     };
 
-    static getGameOverScene() {
+    static getGameOverScene(playAgainCallback) {
         const gameOverScene = new PIXI.Container();
 
-        const style = new PIXI.TextStyle({
+        const theEndStlye = new PIXI.TextStyle({
             fontFamily: 'Futura',
             fontSize: 64,
             fill: 'white'
         });
 
-        const message = new PIXI.Text('The End!', style);
+        const playAgainStyle = new PIXI.TextStyle({
+            fontFamily: 'Futura',
+            fontSize: 32,
+            fill: 'white',
+            cursor: 'pointer'
+        });
+
+        const message = new PIXI.Text('The End!', theEndStlye);
         message.x = Config.WINDOW_WIDTH / 2 - message.width / 2;
-        message.y = Config.WINDOW_HEIGHT / 2 - style.fontSize;
+        message.y = Config.WINDOW_HEIGHT / 2 - theEndStlye.fontSize;
+
+        const playAgain = new PIXI.Text('Play Again!', playAgainStyle);
+        playAgain.x = Config.WINDOW_HEIGHT / 2 - playAgainStyle.fontSize;
+        playAgain.y = message.y + message.height;
+
+        playAgain.interactive = true;
+        playAgain.buttonMode = true;
+        playAgain.on('click', (e) => {
+            playAgainCallback();
+        });
+
         gameOverScene.addChild(message);
+        gameOverScene.addChild(playAgain);
 
         return gameOverScene;
     }

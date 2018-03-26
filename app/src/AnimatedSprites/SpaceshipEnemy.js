@@ -11,16 +11,29 @@ export default class SpaceshipEnemy extends EmittingAnimatedSprite {
         this.vx = SpaceshipEnemy.MOVING_SPEED;
         this.position.y = 200;
         this.pixelsToMoveVertically = 0;
-        this.play();
+        this.movementRandomizerIntervalId = null;
 
-        setInterval(() => {
-            this.changeSpeed();
-            this.pixelsToMoveVertically = Helpers.getRandomInteger(-1, 1);
-        }, Helpers.getRandomInteger(1, 2) * 1000);
+        this.play();
+        this.startMovementRandomizer();
+    }
+
+    changeVerticalMovement() {
+        this.pixelsToMoveVertically = Helpers.getRandomInteger(-1, 1);
     }
 
     changeSpeed() {
         this.vx = Helpers.getRandomInteger(-0.5, -6);
+    }
+
+    startMovementRandomizer() {
+        this.movementRandomizerIntervalId = setInterval(() => {
+            this.changeSpeed();
+            this.changeVerticalMovement();
+        }, Helpers.getRandomInteger(1, 2) * 1000);
+    }
+
+    clearInterval() {
+        clearInterval(this.movementRandomizerIntervalId);
     }
 }
 

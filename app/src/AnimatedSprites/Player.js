@@ -11,7 +11,7 @@ export default class Player extends EmittingAnimatedSprite {
         this.animationSpeed = Player.ANIMATION_SPEED;
         this.vx = 0;
         this.vy = 0;
-        this.position.y = (Config.WINDOW_HEIGHT / 2) - (this.height / 2);
+        this.resetPosition();
         this.play();
 
         this.setKeyHandlers();
@@ -62,6 +62,11 @@ export default class Player extends EmittingAnimatedSprite {
                 this.vx = 0;
             }
         };
+    }
+
+    resetPosition() {
+        this.position.x = 0;
+        this.position.y = (Config.WINDOW_HEIGHT / 2) - (this.height / 2);
     }
 }
 
