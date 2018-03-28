@@ -43,7 +43,12 @@ export default class GameStateHandler {
 
         for (let i = 0; i < this.stage.children.length; i++) {
             const child = this.stage.children[i];
-            if (child.constructor === SpaceshipEnemy || child.constructor === Rocket) {
+            if (child.constructor === SpaceshipEnemy) {
+                this.stage.removeChild(child);
+            }
+
+            if (child.constructor === Rocket) {
+                this.objectPools.rockets.handBack(child);
                 this.stage.removeChild(child);
             }
         }
