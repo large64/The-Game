@@ -13,4 +13,4 @@ export default class RocketObjectPool extends ObjectPool {
     }
 }
 
-RocketObjectPool.ITEMS_LENGTH = 3;
+RocketObjectPool.ITEMS_LENGTH = 5;

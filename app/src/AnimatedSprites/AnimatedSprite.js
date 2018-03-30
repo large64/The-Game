@@ -1,4 +1,6 @@
 import * as PIXI from 'pixi.js';
+
+import Helpers from "../Helpers";
 import Config from "../Config";
 
 export default class AnimatedSprite extends PIXI.extras.AnimatedSprite {
@@ -7,15 +9,13 @@ export default class AnimatedSprite extends PIXI.extras.AnimatedSprite {
     }
 
     isOutOfScreen() {
-        if (this.position.y > 0 && this.vy < 0
-            || this.position.y < (Config.WINDOW_HEIGHT - this.height) && this.vy > 0) {
-            return false;
-        }
-
-        return !(this.position.x > 0 && this.vx < 0
-            || this.position.x < (Config.WINDOW_WIDTH - this.width) && this.vx > 0);
+        return this.position.x < 0 - this.width
+            || this.position.x > Config.WINDOW_WIDTH
+            || this.position.y < 0 - this.height
+            || this.position.y > Config.WINDOW_HEIGHT;
     }
 
-    handleMovement() {
+    isCollidesWith(sprite) {
+        return Helpers.hitTestRectangle(this, sprite);
     }
 }

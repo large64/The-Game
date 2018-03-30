@@ -25,4 +25,4 @@ export default class SpaceshipEnemyObjectPool extends ObjectPool {
     }
 }
 
-SpaceshipEnemyObjectPool.ITEMS_LENGTH = 5;
+SpaceshipEnemyObjectPool.ITEMS_LENGTH = 8;

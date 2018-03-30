@@ -3,6 +3,7 @@ import * as PIXI from "pixi.js";
 import BlowUpEmitterData from '../EmitterData/BlowUpEmitterData.json';
 import EmittingAnimatedSprite from "./EmittingAnimatedSprite";
 import Helpers from "../Helpers";
+import Config from "../Config";
 
 export default class SpaceshipEnemy extends EmittingAnimatedSprite {
     constructor(frames) {
@@ -29,11 +30,20 @@ export default class SpaceshipEnemy extends EmittingAnimatedSprite {
         this.movementRandomizerIntervalId = setInterval(() => {
             this.changeSpeed();
             this.changeVerticalMovement();
-        }, Helpers.getRandomInteger(1, 2) * 1000);
+        }, Helpers.getRandomInteger(500, 2000));
     }
 
     stopMovementRandomizer() {
         clearInterval(this.movementRandomizerIntervalId);
+    }
+
+    handleMovement() {
+        this.position.x += this.vx;
+
+        if (this.position.y > 0
+            && this.position.y < Config.WINDOW_HEIGHT - this.height) {
+            this.position.y += this.pixelsToMoveVertically;
+        }
     }
 }
 

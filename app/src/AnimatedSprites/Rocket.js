@@ -8,6 +8,10 @@ export default class Rocket extends AnimatedSprite {
         this.position.y = 100;
         this.play();
     }
+
+    handleMovement() {
+        this.position.x += this.vx;
+    }
 }
 
 Rocket.ANIMATION_SPEED = 0.3;

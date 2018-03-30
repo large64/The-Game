@@ -17,6 +17,7 @@ export default class Main {
             width: Config.WINDOW_WIDTH,
             height: Config.WINDOW_HEIGHT
         });
+        this.app.renderer.backgroundColor = 0x2E2E2E;
 
         this.stage = this.app.stage;
 
@@ -41,8 +42,6 @@ export default class Main {
         };
 
         this.parallaxScroller.init(this.stage);
-
-        this.app.renderer.backgroundColor = 0x2E2E2E;
 
         this.player = new Player(Helpers.collectAnimatedSpriteFrames(4, 'spaceship', 'png'));
         this.addParticleContainers();
@@ -131,12 +130,18 @@ export default class Main {
 
             switch (child.constructor) {
                 case Rocket:
-                    this.handleRocketMovement(child);
+                    child.handleMovement();
                     this.handleRocketCollision(child, visibleSpaceshipEnemies);
+                    if (child.isOutOfScreen()) {
+                        this.removeSprite(child, 'rockets');
+                    }
                     break;
                 case SpaceshipEnemy:
-                    this.handleSpaceshipEnemyMovement(child);
+                    child.handleMovement();
                     child.updateParticleContainerPosition();
+                    if (child.isOutOfScreen()) {
+                        this.removeSprite(child, 'spaceshipEnemies');
+                    }
                     break;
             }
         }
@@ -146,31 +151,13 @@ export default class Main {
         this.gameOverScene.visible = true;
         clearInterval(this.spaceShipEnemySpawnerIntervalId);
         this.objectPools.spaceshipEnemies.stopMovementRandomizers();
-        Helpers.emptyStage(this.stage, this.objectPools);
-    }
-
-    handleRocketMovement(rocket) {
-        rocket.position.x += rocket.vx;
-
-        if (rocket.position.x > Config.WINDOW_WIDTH) {
-            this.removeSprite(rocket, 'rockets');
-        }
-    }
-
-    handleSpaceshipEnemyMovement(spaceshipEnemy) {
-        spaceshipEnemy.position.x += spaceshipEnemy.vx;
-
-        if (spaceshipEnemy.position.x < 0 - spaceshipEnemy.width) {
-            this.removeSprite(spaceshipEnemy, 'spaceshipEnemies');
-        }
-
-        spaceshipEnemy.position.y += spaceshipEnemy.pixelsToMoveVertically;
+        this.emptyStage(this.stage, this.objectPools);
     }
 
     handleRocketCollision(rocket, spaceshipEnemies) {
         for (let i = 0; i < spaceshipEnemies.length; i++) {
             const spaceshipEnemy = spaceshipEnemies[i];
-            if (Helpers.hitTestRectangle(rocket, spaceshipEnemy)) {
+            if (rocket.isCollidesWith(spaceshipEnemy)) {
                 spaceshipEnemy.emitter.emit = true;
                 this.removeSprite(spaceshipEnemy, 'spaceshipEnemies');
                 this.removeSprite(rocket, 'rockets');
@@ -181,7 +168,7 @@ export default class Main {
     handlePlayerCollision(spaceshipEnemies) {
         for (let i = 0; i < spaceshipEnemies.length; i++) {
             const spaceshipEnemy = spaceshipEnemies[i];
-            if (Helpers.hitTestRectangle(this.player, spaceshipEnemy)) {
+            if (this.player.isCollidesWith(spaceshipEnemy)) {
                 this.player.emitter.emit = true;
                 spaceshipEnemy.emitter.emit = true;
                 this.stage.removeChild(this.player);
@@ -203,6 +190,20 @@ export default class Main {
         }
 
         this.stage.addChild(this.player.particleContainer);
+    }
+
+    emptyStage() {
+        for (let i = 0; i < this.stage.children.length; i++) {
+            const child = this.stage.children[i];
+            if (child.constructor === SpaceshipEnemy) {
+                this.stage.removeChild(child);
+            }
+
+            if (child.constructor === Rocket) {
+                this.objectPools.rockets.handBack(child);
+                this.stage.removeChild(child);
+            }
+        }
     }
 }
 
