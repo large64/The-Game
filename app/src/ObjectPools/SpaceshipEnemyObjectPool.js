@@ -1,21 +1,28 @@
 import Helpers from "../Helpers";
 import SpaceshipEnemy from "../AnimatedSprites/SpaceshipEnemy";
+import ObjectPool from "./ObjectPool";
 
-export default class RocketObjectPool {
+export default class SpaceshipEnemyObjectPool extends ObjectPool {
     constructor() {
-        this.items = [];
-        for (let i = 0; i < 5; i++) {
+        super();
+        for (let i = 0; i < SpaceshipEnemyObjectPool.ITEMS_LENGTH; i++) {
             const spaceshipEnemyFrames = Helpers.collectAnimatedSpriteFrames(4, 'spaceship_enemy', 'png');
             const spaceshipEnemy = new SpaceshipEnemy(spaceshipEnemyFrames);
             this.items.push(spaceshipEnemy);
         }
     }
 
-    borrow() {
-        return this.items.shift();
+    startMovementRandomizers() {
+        for (let i = 0; i < this.items.length; i++) {
+            this.items[i].startMovementRandomizer();
+        }
     }
 
-    handBack(item) {
-        this.items.push(item);
+    stopMovementRandomizers() {
+        for (let i = 0; i < this.items.length; i++) {
+            this.items[i].stopMovementRandomizer();
+        }
     }
 }
+
+SpaceshipEnemyObjectPool.ITEMS_LENGTH = 5;

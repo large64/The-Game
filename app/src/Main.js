@@ -8,7 +8,8 @@ import Helpers from './Helpers';
 import KeyHandler from "./KeyHandler";
 import RocketObjectPool from "./ObjectPools/RocketObjectPool";
 import SpaceshipEnemyObjectPool from './ObjectPools/SpaceshipEnemyObjectPool';
-import GameStateHandler from "./GameStateHandler";
+import SpaceshipEnemy from "./AnimatedSprites/SpaceshipEnemy";
+import Rocket from "./AnimatedSprites/Rocket";
 
 export default class Main {
     constructor() {
@@ -45,7 +46,7 @@ export default class Main {
 
         this.player = new Player(Helpers.collectAnimatedSpriteFrames(4, 'spaceship', 'png'));
         this.addParticleContainers();
-        this.setSpaceHandler();
+        this.setSpaceButtonHandler();
         this.setSpaceshipEnemySpawner();
 
         this.stage.addChild(this.gameOverScene);
@@ -53,7 +54,7 @@ export default class Main {
 
         document.body.appendChild(this.app.view);
 
-        this.gameState = GameStateHandler.play.bind(this);
+        this.gameState = this.playState;
         this.app.ticker.add(() => this.update());
     }
 
@@ -62,16 +63,14 @@ export default class Main {
     }
 
     restartGame() {
-        for (let i = 0; i < this.objectPools.spaceshipEnemies.items.length; i++) {
-            this.objectPools.spaceshipEnemies.items[i].startMovementRandomizer();
-        }
+        this.objectPools.spaceshipEnemies.startMovementRandomizers();
 
         this.gameOverScene.visible = false;
         this.setSpaceshipEnemySpawner();
         this.player.resetPosition();
 
         this.stage.addChild(this.player);
-        this.gameState = GameStateHandler.play.bind(this);
+        this.gameState = this.playState;
     }
 
     setSpaceshipEnemySpawner() {
@@ -81,7 +80,7 @@ export default class Main {
         );
     }
 
-    setSpaceHandler() {
+    setSpaceButtonHandler() {
         let spaceKeyHandler = new KeyHandler(32);
         spaceKeyHandler.onPress = () => this.fireRocket();
     }
@@ -104,6 +103,54 @@ export default class Main {
             );
             spaceshipEnemy.position.x = Config.WINDOW_WIDTH;
             this.stage.addChild(spaceshipEnemy);
+        }
+    }
+
+    playState() {
+        this.parallaxScroller.moveViewportXBy(Main.SCROLL_SPEED);
+        const visibleSpaceshipEnemies = this.stage.children.filter(
+            (filteredChild) => filteredChild.constructor === SpaceshipEnemy
+        );
+
+        this.handlePlayerMovement();
+        this.handlePlayerCollision(visibleSpaceshipEnemies);
+        this.player.updateParticleContainerPosition();
+
+        for (let i = 0; i < this.stage.children.length; i++) {
+            const child = this.stage.children[i];
+
+            if (!child) {
+                return;
+            }
+
+            switch (child.constructor) {
+                case Rocket:
+                    this.handleRocketMovement(child);
+                    this.handleRocketCollision(child, visibleSpaceshipEnemies);
+                    break;
+                case SpaceshipEnemy:
+                    this.handleSpaceshipEnemyMovement(child);
+                    child.updateParticleContainerPosition();
+                    break;
+            }
+        }
+    }
+
+    endState() {
+        this.gameOverScene.visible = true;
+        clearInterval(this.spaceShipEnemySpawnerIntervalId);
+        this.objectPools.spaceshipEnemies.stopMovementRandomizers();
+
+        for (let i = 0; i < this.stage.children.length; i++) {
+            const child = this.stage.children[i];
+            if (child.constructor === SpaceshipEnemy) {
+                this.stage.removeChild(child);
+            }
+
+            if (child.constructor === Rocket) {
+                this.objectPools.rockets.handBack(child);
+                this.stage.removeChild(child);
+            }
         }
     }
 
@@ -155,7 +202,7 @@ export default class Main {
                 spaceshipEnemy.emitter.emit = true;
                 this.stage.removeChild(this.player);
                 this.removeSprite(spaceshipEnemy, 'spaceshipEnemies');
-                this.gameState = GameStateHandler.end.bind(this);
+                this.gameState = this.endState;
             }
         }
     }

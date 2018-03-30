@@ -1,21 +1,16 @@
 import Helpers from "../Helpers";
 import Rocket from "../AnimatedSprites/Rocket";
+import ObjectPool from "./ObjectPool";
 
-export default class RocketObjectPool {
+export default class RocketObjectPool extends ObjectPool {
     constructor() {
-        this.items = [];
-        for (let i = 0; i < 10; i++) {
+        super();
+        for (let i = 0; i < RocketObjectPool.ITEMS_LENGTH; i++) {
             const rocketFrames = Helpers.collectAnimatedSpriteFrames(7, 'rocket', 'png');
             const rocket = new Rocket(rocketFrames);
             this.items.push(rocket);
         }
     }
-
-    borrow() {
-        return this.items.shift();
-    }
-
-    handBack(item) {
-        this.items.push(item);
-    }
 }
+
+RocketObjectPool.ITEMS_LENGTH = 3;

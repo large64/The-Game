@@ -32,7 +32,7 @@ export default class SpaceshipEnemy extends EmittingAnimatedSprite {
         }, Helpers.getRandomInteger(1, 2) * 1000);
     }
 
-    clearInterval() {
+    stopMovementRandomizer() {
         clearInterval(this.movementRandomizerIntervalId);
     }
 }
