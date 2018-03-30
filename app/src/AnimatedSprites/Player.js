@@ -68,6 +68,17 @@ export default class Player extends EmittingAnimatedSprite {
         this.position.x = 0;
         this.position.y = (Config.WINDOW_HEIGHT / 2) - (this.height / 2);
     }
+
+    handleMovement() {
+        if (this.position.y > 0 && this.vy < 0
+            || this.position.y < (Config.WINDOW_HEIGHT - this.height) && this.vy > 0) {
+            this.position.y += this.vy;
+        }
+        if (this.position.x > 0 && this.vx < 0
+            || this.position.x < (Config.WINDOW_WIDTH - this.width) && this.vx > 0) {
+            this.position.x += this.vx;
+        }
+    }
 }
 
 Player.ANIMATION_SPEED = 0.3;

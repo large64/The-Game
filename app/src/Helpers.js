@@ -1,5 +1,7 @@
 import * as PIXI from "pixi.js";
 import Config from "./Config";
+import SpaceshipEnemy from "./AnimatedSprites/SpaceshipEnemy";
+import Rocket from "./AnimatedSprites/Rocket";
 
 export default class Helpers {
     static collectAnimatedSpriteFrames(numberOfFrames, imageName, imageExtension) {
@@ -110,5 +112,19 @@ export default class Helpers {
         gameOverScene.addChild(playAgain);
 
         return gameOverScene;
+    }
+
+    static emptyStage(stage, objectPools) {
+        for (let i = 0; i < stage.children.length; i++) {
+            const child = stage.children[i];
+            if (child.constructor === SpaceshipEnemy) {
+                stage.removeChild(child);
+            }
+
+            if (child.constructor === Rocket) {
+                objectPools.rockets.handBack(child);
+                stage.removeChild(child);
+            }
+        }
     }
 }

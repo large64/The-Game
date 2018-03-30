@@ -87,23 +87,29 @@ export default class Main {
 
     fireRocket() {
         const rocket = this.objectPools.rockets.borrow();
-        if (rocket) {
-            rocket.position.y = this.player.position.y + this.player.height - rocket.height;
-            rocket.position.x = this.player.position.x;
-            this.stage.addChild(rocket);
+
+        if (!rocket) {
+            return;
         }
+
+        rocket.position.y = this.player.position.y + this.player.height - rocket.height;
+        rocket.position.x = this.player.position.x;
+        this.stage.addChild(rocket);
     }
 
     addSpaceshipEnemy() {
         const spaceshipEnemy = this.objectPools.spaceshipEnemies.borrow();
-        if (spaceshipEnemy) {
-            spaceshipEnemy.position.y = Helpers.getRandomInteger(
-                spaceshipEnemy.height,
-                Config.WINDOW_HEIGHT - spaceshipEnemy.height
-            );
-            spaceshipEnemy.position.x = Config.WINDOW_WIDTH;
-            this.stage.addChild(spaceshipEnemy);
+
+        if (!spaceshipEnemy) {
+            return;
         }
+
+        spaceshipEnemy.position.y = Helpers.getRandomInteger(
+            spaceshipEnemy.height,
+            Config.WINDOW_HEIGHT - spaceshipEnemy.height
+        );
+        spaceshipEnemy.position.x = Config.WINDOW_WIDTH;
+        this.stage.addChild(spaceshipEnemy);
     }
 
     playState() {
@@ -112,7 +118,7 @@ export default class Main {
             (filteredChild) => filteredChild.constructor === SpaceshipEnemy
         );
 
-        this.handlePlayerMovement();
+        this.player.handleMovement();
         this.handlePlayerCollision(visibleSpaceshipEnemies);
         this.player.updateParticleContainerPosition();
 
@@ -140,29 +146,7 @@ export default class Main {
         this.gameOverScene.visible = true;
         clearInterval(this.spaceShipEnemySpawnerIntervalId);
         this.objectPools.spaceshipEnemies.stopMovementRandomizers();
-
-        for (let i = 0; i < this.stage.children.length; i++) {
-            const child = this.stage.children[i];
-            if (child.constructor === SpaceshipEnemy) {
-                this.stage.removeChild(child);
-            }
-
-            if (child.constructor === Rocket) {
-                this.objectPools.rockets.handBack(child);
-                this.stage.removeChild(child);
-            }
-        }
-    }
-
-    handlePlayerMovement() {
-        if (this.player.position.y > 0 && this.player.vy < 0
-            || this.player.position.y < (Config.WINDOW_HEIGHT - this.player.height) && this.player.vy > 0) {
-            this.player.position.y += this.player.vy;
-        }
-        if (this.player.position.x > 0 && this.player.vx < 0
-            || this.player.position.x < (Config.WINDOW_WIDTH - this.player.width) && this.player.vx > 0) {
-            this.player.position.x += this.player.vx;
-        }
+        Helpers.emptyStage(this.stage, this.objectPools);
     }
 
     handleRocketMovement(rocket) {
