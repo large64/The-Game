@@ -1,6 +1,7 @@
 import * as PIXI from 'pixi.js';
+import AnimatedSprite from "./AnimatedSprite";
 
-export default class EmittingAnimatedSprite extends PIXI.extras.AnimatedSprite {
+export default class EmittingAnimatedSprite extends AnimatedSprite {
     constructor(frames, emitterData, particleImages) {
         super(frames);
 
