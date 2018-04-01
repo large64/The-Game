@@ -1,2 +1,2 @@
 #!/bin/bash
-docker-compose run --rm --service-ports --user $(id -u):$(id -g) node npm run http-server ./dist
+docker-compose run --rm --service-ports --user $(id -u):$(id -g) http-server

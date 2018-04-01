@@ -4,6 +4,10 @@ services:
     image: node:9.8.0
     volumes:
       - .:/project
-    ports:
-      - "8080:8080"
     working_dir: /project
+  http-server:
+    image: node:9.8.0
+    volumes:
+      - .:/project
+    working_dir: /project
+    entrypoint: npm run http-server ./dist
