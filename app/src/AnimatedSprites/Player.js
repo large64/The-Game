@@ -1,5 +1,3 @@
-import * as PIXI from "pixi.js";
-
 import KeyHandler from "../KeyHandler";
 import Config from "../Config";
 import EmittingAnimatedSprite from "./EmittingAnimatedSprite";

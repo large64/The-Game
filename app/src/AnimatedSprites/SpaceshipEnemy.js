@@ -1,5 +1,3 @@
-import * as PIXI from "pixi.js";
-
 import BlowUpEmitterData from '../EmitterData/BlowUpEmitterData.json';
 import EmittingAnimatedSprite from "./EmittingAnimatedSprite";
 import Helpers from "../Helpers";

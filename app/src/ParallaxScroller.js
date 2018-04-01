@@ -1,5 +1,3 @@
-import * as PIXI from "pixi.js";
-
 import BackgroundLayer from './BackgroundLayer';
 
 export default class ParallaxScroller {

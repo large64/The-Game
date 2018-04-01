@@ -1,5 +1,3 @@
-import * as PIXI from 'pixi.js';
-
 import Helpers from "../Helpers";
 import Config from "../Config";
 

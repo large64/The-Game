@@ -1,5 +1,4 @@
-import * as PIXI from 'pixi.js';
-
+import * as PIXI_PARTICLES from 'pixi-particles';
 import AnimatedSprite from "./AnimatedSprite";
 
 export default class EmittingAnimatedSprite extends AnimatedSprite {

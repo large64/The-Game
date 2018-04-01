@@ -1,6 +1,3 @@
-import * as PIXI from 'pixi.js';
-import * as PIXI_PARTICLES from 'pixi-particles';
-
 import ParallaxScroller from './ParallaxScroller';
 import Config from './Config';
 import Player from "./AnimatedSprites/Player";

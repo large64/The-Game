@@ -1,5 +1,3 @@
-import * as PIXI from 'pixi.js';
-
 import Config from './Config';
 
 export default class BackgroundLayer extends PIXI.extras.TilingSprite {

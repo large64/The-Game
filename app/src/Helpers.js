@@ -1,4 +1,3 @@
-import * as PIXI from "pixi.js";
 import Config from "./Config";
 
 export default class Helpers {
