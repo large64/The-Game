@@ -1,3 +1,5 @@
+import * as PIXI_ACTION from 'pixi-action';
+
 import ParallaxScroller from './ParallaxScroller';
 import Config from './Config';
 import Player from "./AnimatedSprites/Player";
@@ -7,6 +9,7 @@ import RocketObjectPool from "./ObjectPools/RocketObjectPool";
 import SpaceshipEnemyObjectPool from './ObjectPools/SpaceshipEnemyObjectPool';
 import SpaceshipEnemy from "./AnimatedSprites/SpaceshipEnemy";
 import Rocket from "./AnimatedSprites/Rocket";
+import SceneHandler from "./SceneHandler";
 
 export default class Main {
     constructor() {
@@ -20,7 +23,10 @@ export default class Main {
 
         this.parallaxScroller = new ParallaxScroller();
         this.player = null;
+
         this.gameOverScene = null;
+        this.splashScene = null;
+
         this.gameState = null;
         this.spaceShipEnemySpawnerIntervalId = null;
 
@@ -30,8 +36,15 @@ export default class Main {
     }
 
     onAssetsLoaded() {
-        this.gameOverScene = Helpers.getGameOverScene(this.restartGame.bind(this));
+        this.gameOverScene = SceneHandler.getGameOverScene(this.restartGame.bind(this));
+        this.splashScene = SceneHandler.getSplashScreenScene(() => {
+            this.gameState = this.playState;
+            this.stage.addChild(this.player);
+            this.setSpaceshipEnemySpawner();
+        });
+
         this.gameOverScene.visible = false;
+        this.splashScene.visible = true;
 
         this.objectPools = {
             'rockets': new RocketObjectPool(),
@@ -43,14 +56,12 @@ export default class Main {
         this.player = new Player(Helpers.collectAnimatedSpriteFrames(4, 'spaceship', 'png'));
         this.addParticleContainers();
         this.setSpaceButtonHandler();
-        this.setSpaceshipEnemySpawner();
 
         this.stage.addChild(this.gameOverScene);
-        this.stage.addChild(this.player);
-
+        this.stage.addChild(this.splashScene);
         document.body.appendChild(this.app.view);
 
-        this.gameState = this.playState;
+        this.gameState = this.splashScreenState;
         this.app.ticker.add(() => this.update());
     }
 
@@ -64,7 +75,6 @@ export default class Main {
         this.gameOverScene.visible = false;
         this.setSpaceshipEnemySpawner();
         this.player.resetPosition();
-
         this.stage.addChild(this.player);
         this.gameState = this.playState;
     }
@@ -144,7 +154,12 @@ export default class Main {
         }
     }
 
+    splashScreenState() {
+        PIXI.actionManager.update();
+    }
+
     endState() {
+        this.stage.removeChild(this.player);
         this.gameOverScene.visible = true;
         clearInterval(this.spaceShipEnemySpawnerIntervalId);
         this.objectPools.spaceshipEnemies.stopMovementRandomizers();
@@ -168,7 +183,6 @@ export default class Main {
             if (this.player.isCollidesWith(spaceshipEnemy)) {
                 this.player.emitter.emit = true;
                 spaceshipEnemy.emitter.emit = true;
-                this.stage.removeChild(this.player);
                 this.removeSprite(spaceshipEnemy, 'spaceshipEnemies');
                 this.gameState = this.endState;
             }

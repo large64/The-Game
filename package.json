@@ -17,6 +17,7 @@
   "author": "large64",
   "license": "ISC",
   "dependencies": {
+    "pixi-action": "1.0.2",
     "pixi-particles": "3.0.0",
     "webpack": "4.1.1",
     "webpack-cli": "2.0.12"
