@@ -6,7 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "http-server": "./node_modules/.bin/http-server",
-    "watch": "./node_modules/.bin/webpack --display-error-details --watch --progress --mode=development"
+    "watch": "./node_modules/.bin/webpack --display-error-details --watch --progress --mode=development",
+    "development": "./node_modules/.bin/webpack --display-error-details --progress --mode=development",
+    "production": "BABEL_ENV=production ./node_modules/.bin/webpack --progress --mode=production --config=webpack.production.config.js"
   },
   "repository": {
     "type": "git",
@@ -15,13 +17,17 @@
   "author": "large64",
   "license": "ISC",
   "dependencies": {
-    "copy-webpack-plugin": "4.5.1",
-    "pixi-particles": "^3.0.0",
-    "pixi.js": "4.7.1",
+    "pixi-particles": "3.0.0",
     "webpack": "4.1.1",
     "webpack-cli": "2.0.12"
   },
   "devDependencies": {
-    "http-server": "^0.11.1"
+    "babel-core": "6.26.0",
+    "babel-loader": "7.1.4",
+    "babel-preset-env": "1.6.1",
+    "copy-webpack-plugin": "4.5.1",
+    "http-server": "^0.11.1",
+    "pixi.js": "4.7.1",
+    "webpack-bundle-analyzer": "^2.11.1"
   }
 }
