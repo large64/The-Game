@@ -49,7 +49,7 @@ export default class SceneHandler {
             });
         }, 2000);
 
-        return splashScreenScene
+        return splashScreenScene;
     }
 
     static getMainScreenScene() {
@@ -57,7 +57,7 @@ export default class SceneHandler {
         const backgroundImage = new PIXI.Sprite(PIXI.loader.resources['farBackground'].texture);
         mainScreenScene.addChild(backgroundImage);
 
-        const spaceshipEnemy = new SpaceshipEnem    y(Helpers.collectAnimatedSpriteFrames(4, 'spaceship_enemy', 'png'));
+        const spaceshipEnemy = new SpaceshipEnemy(Helpers.collectAnimatedSpriteFrames(4, 'spaceship_enemy', 'png'));
 
         const game1Button = new Button('GAME1', 200, 50, 0, 0);
 
