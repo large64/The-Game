@@ -26,6 +26,7 @@ export default class Main {
 
         this.gameOverScene = null;
         this.splashScene = null;
+        this.mainScreenScene = null;
 
         this.gameState = null;
         this.spaceShipEnemySpawnerIntervalId = null;
@@ -37,13 +38,18 @@ export default class Main {
 
     onAssetsLoaded() {
         this.gameOverScene = SceneHandler.getGameOverScene(this.restartGame.bind(this));
+        this.mainScreenScene = SceneHandler.getMainScreenScene();
         this.splashScene = SceneHandler.getSplashScreenScene(() => {
-            this.gameState = this.playState;
-            this.stage.addChild(this.player);
-            this.setSpaceshipEnemySpawner();
+            this.mainScreenScene.visible = true;
+
+            //this.parallaxScroller.init(this.stage);
+            //this.gameState = this.playState;
+            //this.stage.addChild(this.player);
+            //this.setSpaceshipEnemySpawner();
         });
 
         this.gameOverScene.visible = false;
+        this.mainScreenScene.visible = false;
         this.splashScene.visible = true;
 
         this.objectPools = {
@@ -51,14 +57,13 @@ export default class Main {
             'spaceshipEnemies': new SpaceshipEnemyObjectPool()
         };
 
-        this.parallaxScroller.init(this.stage);
-
         this.player = new Player(Helpers.collectAnimatedSpriteFrames(4, 'spaceship', 'png'));
         this.addParticleContainers();
         this.setSpaceButtonHandler();
 
         this.stage.addChild(this.gameOverScene);
         this.stage.addChild(this.splashScene);
+        this.stage.addChild(this.mainScreenScene);
         document.body.appendChild(this.app.view);
 
         this.gameState = this.splashScreenState;
@@ -164,6 +169,10 @@ export default class Main {
         clearInterval(this.spaceShipEnemySpawnerIntervalId);
         this.objectPools.spaceshipEnemies.stopMovementRandomizers();
         this.emptyStage(this.stage, this.objectPools);
+    }
+
+    mainScreenState() {
+        this.mainScreenScene.visisble = true;
     }
 
     handleRocketCollision(rocket, spaceshipEnemies) {

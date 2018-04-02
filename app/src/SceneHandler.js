@@ -1,5 +1,7 @@
 import Config from "./Config";
 import Button from "./Button";
+import SpaceshipEnemy from "./AnimatedSprites/SpaceshipEnemy";
+import Helpers from "./Helpers";
 
 export default class SceneHandler {
     static getGameOverScene(playAgainCallback) {
@@ -48,5 +50,20 @@ export default class SceneHandler {
         }, 2000);
 
         return splashScreenScene
+    }
+
+    static getMainScreenScene() {
+        const mainScreenScene = new PIXI.Container();
+        const backgroundImage = new PIXI.Sprite(PIXI.loader.resources['farBackground'].texture);
+        mainScreenScene.addChild(backgroundImage);
+
+        const spaceshipEnemy = new SpaceshipEnem    y(Helpers.collectAnimatedSpriteFrames(4, 'spaceship_enemy', 'png'));
+
+        const game1Button = new Button('GAME1', 200, 50, 0, 0);
+
+        mainScreenScene.addChild(game1Button);
+        mainScreenScene.addChild(spaceshipEnemy);
+
+        return mainScreenScene;
     }
 }
