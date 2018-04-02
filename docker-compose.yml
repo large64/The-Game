@@ -10,4 +10,4 @@ services:
     volumes:
       - .:/project
     working_dir: /project
-    entrypoint: npm run http-server ./dist
+    entrypoint: npm run http-server ./dist -c-1
