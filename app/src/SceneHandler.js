@@ -1,4 +1,5 @@
 import Config from "./Config";
+import Button from "./Button";
 
 export default class SceneHandler {
     static getGameOverScene(playAgainCallback) {
@@ -10,29 +11,24 @@ export default class SceneHandler {
             fill: 'white'
         });
 
-        const playAgainStyle = new PIXI.TextStyle({
-            fontFamily: 'Futura',
-            fontSize: 32,
-            fill: 'white',
-            cursor: 'pointer'
-        });
-
-        const message = new PIXI.Text('The End!', theEndStyle);
+        const message = new PIXI.Text('GAME OVER', theEndStyle);
         message.x = Config.WINDOW_WIDTH / 2 - message.width / 2;
         message.y = Config.WINDOW_HEIGHT / 2 - theEndStyle.fontSize;
 
-        const playAgain = new PIXI.Text('Play Again!', playAgainStyle);
-        playAgain.x = Config.WINDOW_HEIGHT / 2 - playAgainStyle.fontSize;
-        playAgain.y = message.y + message.height;
-
-        playAgain.interactive = true;
-        playAgain.buttonMode = true;
-        playAgain.on('click', (e) => {
+        const tryAgainWidth = 240;
+        const tryAgain = new Button(
+            'TRY AGAIN',
+            tryAgainWidth,
+            55,
+            Config.WINDOW_WIDTH / 2 - tryAgainWidth / 2,
+            message.y + 80
+        );
+        tryAgain.on('click', (e) => {
             playAgainCallback();
         });
 
         gameOverScene.addChild(message);
-        gameOverScene.addChild(playAgain);
+        gameOverScene.addChild(tryAgain);
 
         return gameOverScene;
     }
