@@ -4,7 +4,7 @@ export default class SceneHandler {
     static getGameOverScene(playAgainCallback) {
         const gameOverScene = new PIXI.Container();
 
-        const theEndStlye = new PIXI.TextStyle({
+        const theEndStyle = new PIXI.TextStyle({
             fontFamily: 'Futura',
             fontSize: 64,
             fill: 'white'
@@ -17,9 +17,9 @@ export default class SceneHandler {
             cursor: 'pointer'
         });
 
-        const message = new PIXI.Text('The End!', theEndStlye);
+        const message = new PIXI.Text('The End!', theEndStyle);
         message.x = Config.WINDOW_WIDTH / 2 - message.width / 2;
-        message.y = Config.WINDOW_HEIGHT / 2 - theEndStlye.fontSize;
+        message.y = Config.WINDOW_HEIGHT / 2 - theEndStyle.fontSize;
 
         const playAgain = new PIXI.Text('Play Again!', playAgainStyle);
         playAgain.x = Config.WINDOW_HEIGHT / 2 - playAgainStyle.fontSize;
