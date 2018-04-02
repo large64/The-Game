@@ -38,7 +38,7 @@ export default class SpaceshipEnemy extends EmittingAnimatedSprite {
     handleMovement() {
         this.position.x += this.vx;
 
-        if (this.position.y > 0
+        if (this.position.y > this.height / 2
             && this.position.y < Config.WINDOW_HEIGHT - this.height) {
             this.position.y += this.pixelsToMoveVertically;
         }
