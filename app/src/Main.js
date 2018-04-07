@@ -34,18 +34,15 @@ export default class Main {
         this.objectPools = {};
 
         Helpers.loadAssets(this.onAssetsLoaded.bind(this));
+        this.registerEventListeners();
     }
 
     onAssetsLoaded() {
-        this.gameOverScene = SceneHandler.getGameOverScene(this.restartGame.bind(this));
+        this.parallaxScroller.init(this.stage);
         this.mainScreenScene = SceneHandler.getMainScreenScene();
+        this.gameOverScene = SceneHandler.getGameOverScene(this.restartGame.bind(this));
         this.splashScene = SceneHandler.getSplashScreenScene(() => {
             this.mainScreenScene.visible = true;
-
-            //this.parallaxScroller.init(this.stage);
-            //this.gameState = this.playState;
-            //this.stage.addChild(this.player);
-            //this.setSpaceshipEnemySpawner();
         });
 
         this.gameOverScene.visible = false;
@@ -61,9 +58,9 @@ export default class Main {
         this.addParticleContainers();
         this.setSpaceButtonHandler();
 
+        this.stage.addChild(this.mainScreenScene);
         this.stage.addChild(this.gameOverScene);
         this.stage.addChild(this.splashScene);
-        this.stage.addChild(this.mainScreenScene);
         document.body.appendChild(this.app.view);
 
         this.gameState = this.splashScreenState;
@@ -171,10 +168,6 @@ export default class Main {
         this.emptyStage(this.stage, this.objectPools);
     }
 
-    mainScreenState() {
-        this.mainScreenScene.visisble = true;
-    }
-
     handleRocketCollision(rocket, spaceshipEnemies) {
         for (let i = 0; i < spaceshipEnemies.length; i++) {
             const spaceshipEnemy = spaceshipEnemies[i];
@@ -226,7 +219,16 @@ export default class Main {
             }
         }
     }
+
+    registerEventListeners() {
+        document.addEventListener('start', e => {
+            this.parallaxScroller.makeVisible();
+            this.mainScreenScene.visible = false;
+            this.gameState = this.playState;
+            this.stage.addChild(this.player);
+            this.setSpaceshipEnemySpawner();
+        });
+    }
 }
 
 Main.SCROLL_SPEED = 3;
-Main.GAME_MODE = 1;

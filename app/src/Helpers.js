@@ -73,4 +73,14 @@ export default class Helpers {
         //`hit` will be either `true` or `false`
         return hit;
     };
+
+    static registerEventListeners() {
+        document.addEventListener('start', e => {
+            this.mainScreenScene.visible = false;
+            this.parallaxScroller.init(this.stage);
+            this.gameState = this.playState;
+            this.stage.addChild(this.player);
+            this.setSpaceshipEnemySpawner();
+        })
+    }
 }

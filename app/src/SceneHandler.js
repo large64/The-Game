@@ -59,7 +59,11 @@ export default class SceneHandler {
 
         const spaceshipEnemy = new SpaceshipEnemy(Helpers.collectAnimatedSpriteFrames(4, 'spaceship_enemy', 'png'));
 
+        const startGameEvent = new Event('start');
         const game1Button = new Button('GAME1', 200, 50, 0, 0);
+        game1Button.on('mouseup', (e) => {
+            document.dispatchEvent(startGameEvent);
+        });
 
         mainScreenScene.addChild(game1Button);
         mainScreenScene.addChild(spaceshipEnemy);

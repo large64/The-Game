@@ -14,6 +14,9 @@ export default class ParallaxScroller {
         const closeBackgroundTexture = PIXI.loader.resources['closeBackground'].texture;
         this.closeBackgroundLayer= new BackgroundLayer(closeBackgroundTexture, ParallaxScroller.DELTA_X_CLOSE);
 
+        this.farBackgroundLayer.visible = false;
+        this.closeBackgroundLayer.visible = false;
+
         stage.addChild(this.farBackgroundLayer);
         stage.addChild(this.closeBackgroundLayer);
     }
@@ -27,6 +30,11 @@ export default class ParallaxScroller {
     moveViewportXBy(units) {
         const newViewportX = this.viewportX + units;
         this.setViewportX(newViewportX);
+    }
+
+    makeVisible() {
+        this.farBackgroundLayer.visible = true;
+        this.closeBackgroundLayer.visible = true;
     }
 }
 
