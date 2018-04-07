@@ -216,6 +216,7 @@ export default class Main {
         for (let i = 0; i < this.stage.children.length; i++) {
             const child = this.stage.children[i];
             if (child.constructor === SpaceshipEnemy) {
+                this.objectPools.spaceshipEnemies.handBack(child);
                 this.stage.removeChild(child);
             }
 
