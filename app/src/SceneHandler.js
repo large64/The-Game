@@ -2,7 +2,7 @@ import Config from "./Config";
 import Button from "./Button";
 import SpaceshipEnemy from "./AnimatedSprites/SpaceshipEnemy";
 import Helpers from "./Helpers";
-import MainMenu from "./MainMenu";
+import Menu from "./Menu";
 
 export default class SceneHandler {
     static getGameOverScene(playAgainCallback) {
@@ -61,7 +61,7 @@ export default class SceneHandler {
         const spaceshipEnemy = new SpaceshipEnemy(Helpers.collectAnimatedSpriteFrames(4, 'spaceship_enemy', 'png'));
 
         const startGameEvent = new Event('start');
-        const mainMenu = new MainMenu(200, 50, 10, 260);
+        const mainMenu = new Menu(200, 50, 10, 260);
         const game1Button = mainMenu.createButton('GAME1');
         const game2Button = mainMenu.createButton('GAME2');
         const game3Button = mainMenu.createButton('GAME3');

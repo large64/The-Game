@@ -1,7 +1,7 @@
 import Config from "./Config";
 import Button from "./Button";
 
-export default class MainMenu extends PIXI.Container {
+export default class Menu extends PIXI.Container {
     constructor(buttonWidth, buttonHeight, buttonMarginBottom, firstButtonPositionY) {
         super();
         this.buttonWidth = buttonWidth;
