@@ -2,6 +2,7 @@ import Config from "./Config";
 import Button from "./Button";
 import SpaceshipEnemy from "./AnimatedSprites/SpaceshipEnemy";
 import Helpers from "./Helpers";
+import MainMenu from "./MainMenu";
 
 export default class SceneHandler {
     static getGameOverScene(playAgainCallback) {
@@ -60,40 +61,26 @@ export default class SceneHandler {
         const spaceshipEnemy = new SpaceshipEnemy(Helpers.collectAnimatedSpriteFrames(4, 'spaceship_enemy', 'png'));
 
         const startGameEvent = new Event('start');
+        const mainMenu = new MainMenu(200, 50, 10, 260);
+        const game1Button = mainMenu.createButton('GAME1');
+        const game2Button = mainMenu.createButton('GAME2');
+        const game3Button = mainMenu.createButton('GAME3');
+        const exitButton = mainMenu.createButton('EXIT');
 
-        const buttonWidth = 200;
-        const buttonHeight = 50;
-        const buttonMarginBottom = 10;
-        const firstButtonPositionX = Config.WINDOW_WIDTH / 2 - buttonWidth / 2;
-        const firstButtonPositionY = 260;
-
-        const game1Button = new Button('GAME1', buttonWidth, buttonHeight, firstButtonPositionX, firstButtonPositionY);
         game1Button.on('mouseup', (e) => {
             document.dispatchEvent(startGameEvent);
         });
-
-        const secondButtonPositionY = firstButtonPositionY + buttonHeight + buttonMarginBottom;
-        const game2Button = new Button('GAME2', buttonWidth, buttonHeight, firstButtonPositionX, secondButtonPositionY);
         game2Button.on('mouseup', (e) => {
             document.dispatchEvent(startGameEvent);
         });
-
-        const thirdButtonPositionY = secondButtonPositionY + buttonHeight + buttonMarginBottom;
-        const game3Button = new Button('GAME3', buttonWidth, buttonHeight, firstButtonPositionX, thirdButtonPositionY);
         game3Button.on('mouseup', (e) => {
             document.dispatchEvent(startGameEvent);
         });
-
-        const fourthButtonPositionY = thirdButtonPositionY + buttonHeight + buttonMarginBottom;
-        const exitButton = new Button('EXIT', buttonWidth, buttonHeight, firstButtonPositionX, fourthButtonPositionY);
         exitButton.on('mouseup', (e) => {
             window.location = 'http://example.com';
         });
 
-        mainScreenScene.addChild(game1Button);
-        mainScreenScene.addChild(game2Button);
-        mainScreenScene.addChild(game3Button);
-        mainScreenScene.addChild(exitButton);
+        mainScreenScene.addChild(mainMenu);
         mainScreenScene.addChild(spaceshipEnemy);
 
         return mainScreenScene;
