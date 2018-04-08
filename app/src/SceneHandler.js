@@ -3,6 +3,7 @@ import Button from "./Button";
 import SpaceshipEnemy from "./AnimatedSprites/SpaceshipEnemy";
 import Helpers from "./Helpers";
 import Menu from "./Menu";
+import Logo from "./Logo";
 
 export default class SceneHandler {
     static getGameOverScene(playAgainCallback) {
@@ -61,7 +62,7 @@ export default class SceneHandler {
         const spaceshipEnemy = new SpaceshipEnemy(Helpers.collectAnimatedSpriteFrames(4, 'spaceship_enemy', 'png'));
 
         const startGameEvent = new Event('start');
-        const mainMenu = new Menu(200, 50, 10, 260);
+        const mainMenu = new Menu(200, 50, 10, 280);
         const game1Button = mainMenu.createButton('GAME1');
         const game2Button = mainMenu.createButton('GAME2');
         const game3Button = mainMenu.createButton('GAME3');
@@ -79,6 +80,11 @@ export default class SceneHandler {
         exitButton.on('mouseup', (e) => {
             window.location = 'http://example.com';
         });
+
+        const logo = new Logo();
+        logo.position.x = Config.WINDOW_WIDTH / 2 - logo.width / 2;
+        logo.position.y = 70;
+        mainScreenScene.addChild(logo);
 
         mainScreenScene.addChild(mainMenu);
         mainScreenScene.addChild(spaceshipEnemy);
