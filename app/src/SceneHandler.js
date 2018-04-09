@@ -10,7 +10,7 @@ export default class SceneHandler {
         const gameOverScene = new PIXI.Container();
 
         const theEndStyle = new PIXI.TextStyle({
-            fontFamily: 'Futura',
+            fontFamily: 'Arial',
             fontSize: 64,
             fill: 'white'
         });
@@ -59,7 +59,21 @@ export default class SceneHandler {
         const backgroundImage = new PIXI.Sprite(PIXI.loader.resources['farBackground'].texture);
         mainScreenScene.addChild(backgroundImage);
 
-        const spaceshipEnemy = new SpaceshipEnemy(Helpers.collectAnimatedSpriteFrames(4, 'spaceship_enemy', 'png'));
+        const spaceshipEnemyLeft = new SpaceshipEnemy(Helpers.collectAnimatedSpriteFrames(4, 'spaceship_enemy', 'png'));
+        spaceshipEnemyLeft.stopMovementRandomizer();
+        spaceshipEnemyLeft.vx = 0;
+        spaceshipEnemyLeft.position.y = 260;
+        spaceshipEnemyLeft.position.x = 50;
+        spaceshipEnemyLeft.anchor.set(0.5, 0);
+        spaceshipEnemyLeft.scale.x *= -1;
+        spaceshipEnemyLeft.pixelsToMoveVertically = 1;
+
+        const spaceshipEnemyRight = new SpaceshipEnemy(Helpers.collectAnimatedSpriteFrames(4, 'spaceship_enemy', 'png'));
+        spaceshipEnemyRight.stopMovementRandomizer();
+        spaceshipEnemyRight.vx = 0;
+        spaceshipEnemyRight.position.y = 350;
+        spaceshipEnemyRight.position.x = Config.WINDOW_WIDTH - spaceshipEnemyRight.width - 25;
+        spaceshipEnemyRight.pixelsToMoveVertically = -1;
 
         const startGameEvent = new Event('start');
         const mainMenu = new Menu(200, 50, 10, 280);
@@ -81,13 +95,14 @@ export default class SceneHandler {
             window.location = 'http://example.com';
         });
 
-        const logo = new Logo();
+        const logo = new PIXI.Sprite(PIXI.loader.resources['logo'].texture);
         logo.position.x = Config.WINDOW_WIDTH / 2 - logo.width / 2;
         logo.position.y = 70;
         mainScreenScene.addChild(logo);
 
         mainScreenScene.addChild(mainMenu);
-        mainScreenScene.addChild(spaceshipEnemy);
+        mainScreenScene.addChild(spaceshipEnemyLeft);
+        mainScreenScene.addChild(spaceshipEnemyRight);
 
         return mainScreenScene;
     }

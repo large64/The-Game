@@ -4,7 +4,7 @@
       "frame": {
         "x": 0,
         "y": 0,
-        "w": 64,
+        "w": 58,
         "h": 30
       },
       "rotated": false,
@@ -12,11 +12,11 @@
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 64,
+        "w": 58,
         "h": 30
       },
       "sourceSize": {
-        "w": 64,
+        "w": 58,
         "h": 30
       }
     },
@@ -24,7 +24,7 @@
       "frame": {
         "x": 0,
         "y": 30,
-        "w": 64,
+        "w": 58,
         "h": 30
       },
       "rotated": false,
@@ -32,11 +32,11 @@
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 64,
+        "w": 58,
         "h": 30
       },
       "sourceSize": {
-        "w": 64,
+        "w": 58,
         "h": 30
       }
     },
@@ -44,7 +44,7 @@
       "frame": {
         "x": 0,
         "y": 60,
-        "w": 64,
+        "w": 58,
         "h": 30
       },
       "rotated": false,
@@ -52,11 +52,11 @@
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 64,
+        "w": 58,
         "h": 30
       },
       "sourceSize": {
-        "w": 64,
+        "w": 58,
         "h": 30
       }
     },
@@ -64,7 +64,7 @@
       "frame": {
         "x": 0,
         "y": 90,
-        "w": 64,
+        "w": 58,
         "h": 30
       },
       "rotated": false,
@@ -72,11 +72,11 @@
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 64,
+        "w": 58,
         "h": 30
       },
       "sourceSize": {
-        "w": 64,
+        "w": 58,
         "h": 30
       }
     }
@@ -87,7 +87,7 @@
     "image": "spaceship_enemy.png",
     "format": "RGBA8888",
     "size": {
-      "w": 64,
+      "w": 58,
       "h": 120
     }
   }

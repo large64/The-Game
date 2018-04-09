@@ -43,6 +43,18 @@ export default class SpaceshipEnemy extends EmittingAnimatedSprite {
             this.position.y += this.pixelsToMoveVertically;
         }
     }
+
+    handleFloatingMovement() {
+        if (this.position.y >= 400) {
+            this.pixelsToMoveVertically = -1;
+        }
+
+        if (this.position.y <= 200) {
+            this.pixelsToMoveVertically = 1;
+        }
+
+        this.position.y += this.pixelsToMoveVertically;
+    }
 }
 
 SpaceshipEnemy.ANIMATION_SPEED = 0.3;

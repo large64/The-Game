@@ -19,6 +19,7 @@ export default class Helpers {
             .add('spaceshipParticle', 'assets/images/spaceship_particle.png')
             .add('farBackground', 'assets/images/far_background.png')
             .add('closeBackground', 'assets/images/close_background.png')
+            .add('logo', 'assets/images/logo.png')
             .load(onReadyCallback);
     }
 
@@ -73,14 +74,4 @@ export default class Helpers {
         //`hit` will be either `true` or `false`
         return hit;
     };
-
-    static registerEventListeners() {
-        document.addEventListener('start', e => {
-            this.mainScreenScene.visible = false;
-            this.parallaxScroller.init(this.stage);
-            this.gameState = this.playState;
-            this.stage.addChild(this.player);
-            this.setSpaceshipEnemySpawner();
-        })
-    }
 }

@@ -6,7 +6,7 @@ export default class Button extends PIXI.Sprite {
         this.position.y = positionY;
 
         this.text = new PIXI.Text(text, {
-            fontFamily: 'Futura',
+            fontFamily: 'Arial',
             fontSize: 25,
             fill: 0x808080,
             cursor: 'pointer',

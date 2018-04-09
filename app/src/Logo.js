@@ -11,7 +11,7 @@ export default class Logo extends PIXI.Sprite {
         graphics.endFill();
 
         const text = new PIXI.Text('THE GAME', {
-            fontFamily: 'Futura',
+            fontFamily: 'Arial',
             fontSize: 36,
             fill: 0xFFFFFF,
         });

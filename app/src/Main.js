@@ -43,6 +43,7 @@ export default class Main {
         this.gameOverScene = SceneHandler.getGameOverScene(this.restartGame.bind(this));
         this.splashScene = SceneHandler.getSplashScreenScene(() => {
             this.mainScreenScene.visible = true;
+            this.gameState = this.mainScreenState;
         });
 
         this.gameOverScene.visible = false;
@@ -158,6 +159,16 @@ export default class Main {
 
     splashScreenState() {
         PIXI.actionManager.update();
+    }
+
+    mainScreenState() {
+        const visibleSpaceshipEnemies = this.mainScreenScene.children.filter(
+            (filteredChild) => filteredChild.constructor === SpaceshipEnemy
+        );
+
+        for (let i = 0; i < visibleSpaceshipEnemies.length; i++) {
+            visibleSpaceshipEnemies[i].handleFloatingMovement();
+        }
     }
 
     endState() {
