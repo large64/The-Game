@@ -62,7 +62,7 @@ export default class Main {
         this.stage.addChild(this.mainScreenScene);
         this.stage.addChild(this.gameOverScene);
         this.stage.addChild(this.splashScene);
-        document.body.appendChild(this.app.view);
+        document.getElementById('app').appendChild(this.app.view);
 
         this.gameState = this.splashScreenState;
         this.app.ticker.add(() => this.update());
