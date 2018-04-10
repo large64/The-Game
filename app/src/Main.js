@@ -222,6 +222,7 @@ export default class Main {
     registerEventListeners() {
         document.addEventListener('start', () => {
             this.parallaxScroller.setVisibility(true);
+            this.objectPools.spaceshipEnemies.startMovementRandomizers();
             this.mainScreenScene.visible = false;
             this.gameOverScene.visible = false;
             this.gameState = this.playState;
