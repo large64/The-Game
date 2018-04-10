@@ -3,10 +3,9 @@ import Button from "./Button";
 import SpaceshipEnemy from "./AnimatedSprites/SpaceshipEnemy";
 import Helpers from "./Helpers";
 import Menu from "./Menu";
-import Logo from "./Logo";
 
 export default class SceneHandler {
-    static getGameOverScene(playAgainCallback) {
+    static getGameOverScene(onAnimationEndCallback) {
         const gameOverScene = new PIXI.Container();
 
         const theEndStyle = new PIXI.TextStyle({
@@ -17,22 +16,9 @@ export default class SceneHandler {
 
         const message = new PIXI.Text('GAME OVER', theEndStyle);
         message.x = Config.WINDOW_WIDTH / 2 - message.width / 2;
-        message.y = Config.WINDOW_HEIGHT / 2 - theEndStyle.fontSize;
-
-        const tryAgainWidth = 240;
-        const tryAgain = new Button(
-            'TRY AGAIN',
-            tryAgainWidth,
-            55,
-            Config.WINDOW_WIDTH / 2 - tryAgainWidth / 2,
-            message.y + 80
-        );
-        tryAgain.on('click', (e) => {
-            playAgainCallback();
-        });
+        message.y = Config.WINDOW_HEIGHT / 2 - theEndStyle.fontSize / 2;
 
         gameOverScene.addChild(message);
-        gameOverScene.addChild(tryAgain);
 
         return gameOverScene;
     }

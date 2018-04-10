@@ -32,9 +32,9 @@ export default class ParallaxScroller {
         this.setViewportX(newViewportX);
     }
 
-    makeVisible() {
-        this.farBackgroundLayer.visible = true;
-        this.closeBackgroundLayer.visible = true;
+    setVisibility(visibility) {
+        this.farBackgroundLayer.visible = visibility;
+        this.closeBackgroundLayer.visible = visibility;
     }
 }
 
