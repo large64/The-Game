@@ -1,5 +1,3 @@
-import * as PIXI_ACTION from 'pixi-action';
-
 import ParallaxScroller from './ParallaxScroller';
 import Config from './Config';
 import Player from "./AnimatedSprites/Player";
