@@ -83,6 +83,10 @@ export default class Main {
     }
 
     fireRocket() {
+        if (this.gameState !== this.playState) {
+            return;
+        }
+
         const rocket = this.objectPools.rockets.borrow();
 
         if (!rocket) {
