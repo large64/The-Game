@@ -4,7 +4,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 module.exports = {
     entry: './app/src/app.js',
     output: {
-    filename: 'app.js',
+    filename: 'app.[chunkhash:4].js',
     path: path.resolve(__dirname, 'dist')
     },
     plugins: [
