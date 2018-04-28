@@ -20,7 +20,6 @@ export default class Main {
 
         this.stage = this.app.stage;
 
-        this.collisionHandler = new CollisionHandler();
         this.parallaxScroller = new ParallaxScroller();
         this.player = null;
 
@@ -143,7 +142,7 @@ export default class Main {
         );
 
         this.player.handleMovement();
-        this.collisionHandler.handlePlayerCollision(visibleSpaceshipEnemies, this.player);
+        CollisionHandler.handlePlayerCollision(visibleSpaceshipEnemies, this.player);
         this.player.updateParticleContainerPosition();
 
         let i = this.stage.children.length;
@@ -157,7 +156,7 @@ export default class Main {
             switch (child.constructor) {
                 case Rocket:
                     child.handleMovement();
-                    this.handleRocketCollision(child, visibleSpaceshipEnemies);
+                    CollisionHandler.handleRocketCollision(child, visibleSpaceshipEnemies);
                     if (child.isOutOfScreen()) {
                         this.removeSprite(child, 'rockets');
                     }
@@ -187,18 +186,6 @@ export default class Main {
 
     static actionManagerUpdateState() {
         PIXI.actionManager.update();
-    }
-
-    handleRocketCollision(rocket, spaceshipEnemies) {
-        let i = spaceshipEnemies.length;
-        while (i--) {
-            const spaceshipEnemy = spaceshipEnemies[i];
-            if (rocket.isCollidesWith(spaceshipEnemy)) {
-                spaceshipEnemy.emitter.emit = true;
-                this.removeSprite(spaceshipEnemy, 'spaceshipEnemies');
-                this.removeSprite(rocket, 'rockets');
-            }
-        }
     }
 
     removeSprite(sprite, objectPool) {
