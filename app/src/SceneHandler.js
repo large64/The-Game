@@ -92,4 +92,22 @@ export default class SceneHandler {
 
         return mainScreenScene;
     }
+
+    static getPauseScene() {
+        const pauseScene = new PIXI.Container();
+
+        const pauseTextStyle = new PIXI.TextStyle({
+            fontFamily: 'Arial',
+            fontSize: 64,
+            fill: 'white'
+        });
+
+        const message = new PIXI.Text('PAUSED', pauseTextStyle);
+        message.x = Config.WINDOW_WIDTH / 2 - message.width / 2;
+        message.y = Config.WINDOW_HEIGHT / 2 - pauseTextStyle.fontSize / 2;
+
+        pauseScene.addChild(message);
+
+        return pauseScene;
+    }
 }

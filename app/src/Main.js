@@ -25,6 +25,7 @@ export default class Main {
         this.gameOverScene = null;
         this.splashScene = null;
         this.mainScreenScene = null;
+        this.pauseScene = null;
 
         this.gameState = null;
         this.spaceShipEnemySpawnerIntervalId = null;
@@ -43,10 +44,12 @@ export default class Main {
             this.mainScreenScene.visible = true;
             this.gameState = this.mainScreenState;
         });
+        this.pauseScene = SceneHandler.getPauseScene();
 
         this.gameOverScene.visible = false;
         this.mainScreenScene.visible = false;
         this.splashScene.visible = true;
+        this.pauseScene.visible = false;
 
         this.objectPools = {
             'rockets': new RocketObjectPool(),
@@ -56,10 +59,12 @@ export default class Main {
         this.player = new Player(Helpers.collectAnimatedSpriteFrames(4, 'spaceship', 'png'));
         this.addParticleContainers();
         this.setSpaceButtonHandler();
+        this.setPbuttonHandler();
 
         this.stage.addChild(this.mainScreenScene);
         this.stage.addChild(this.gameOverScene);
         this.stage.addChild(this.splashScene);
+        this.stage.addChild(this.pauseScene);
         document.getElementById('app').appendChild(this.app.view);
 
         this.gameState = Main.actionManagerUpdateState;
@@ -80,6 +85,20 @@ export default class Main {
     setSpaceButtonHandler() {
         let spaceKeyHandler = new KeyHandler(32);
         spaceKeyHandler.onPress = () => this.fireRocket();
+    }
+
+    setPbuttonHandler() {
+        let pButtonHandler = new KeyHandler(80);
+        pButtonHandler.onPress = () => {
+            if (this.gameState !== this.pauseState) {
+                this.gameState = this.pauseState;
+                this.pauseScene.visible = true;
+                return;
+            }
+
+            this.pauseScene.visible = false;
+            this.gameState = this.playState;
+        }
     }
 
     fireRocket() {
@@ -149,6 +168,8 @@ export default class Main {
             }
         }
     }
+
+    pauseState() {}
 
     mainScreenState() {
         const visibleSpaceshipEnemies = this.mainScreenScene.children.filter(
