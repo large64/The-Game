@@ -9,6 +9,7 @@ import SpaceshipEnemy from "./AnimatedSprites/SpaceshipEnemy";
 import Rocket from "./AnimatedSprites/Rocket";
 import SceneHandler from "./SceneHandler";
 import CollisionHandler from "./CollisionHandler";
+import EnemySpriteSpawner from "./SpriteSpawners/SpaceshipEnemySpriteSpawner";
 
 export default class Main {
     constructor() {
@@ -29,7 +30,7 @@ export default class Main {
         this.pauseScene = null;
 
         this.gameState = null;
-        this.spaceShipEnemySpawnerIntervalId = null;
+        this.spaceShipEnemySpawner = null;
 
         this.objectPools = {};
 
@@ -66,6 +67,7 @@ export default class Main {
         this.stage.addChild(this.gameOverScene);
         this.stage.addChild(this.splashScene);
         this.stage.addChild(this.pauseScene);
+        this.spaceShipEnemySpawner = new EnemySpriteSpawner(this.stage, this.objectPools.spaceshipEnemies);
         document.getElementById('app').appendChild(this.app.view);
 
         this.gameState = Main.actionManagerUpdateState;
@@ -74,13 +76,6 @@ export default class Main {
 
     update() {
         this.gameState();
-    }
-
-    setSpaceshipEnemySpawner() {
-        this.spaceShipEnemySpawnerIntervalId = setInterval(
-            this.addSpaceshipEnemy.bind(this),
-            Config.ENEMY_SPAWN_INTERVAL_SECONDS * 1000
-        );
     }
 
     setSpaceButtonHandler() {
@@ -94,11 +89,11 @@ export default class Main {
             if (this.gameState !== this.pauseState) {
                 this.gameState = this.pauseState;
                 this.pauseScene.visible = true;
-                clearInterval(this.spaceShipEnemySpawnerIntervalId);
+                this.spaceShipEnemySpawner.stop();
                 return;
             }
 
-            this.setSpaceshipEnemySpawner();
+            this.spaceShipEnemySpawner.start();
             this.pauseScene.visible = false;
             this.gameState = this.playState;
         }
@@ -118,21 +113,6 @@ export default class Main {
         rocket.position.y = this.player.position.y + this.player.height - rocket.height;
         rocket.position.x = this.player.position.x;
         this.stage.addChild(rocket);
-    }
-
-    addSpaceshipEnemy() {
-        const spaceshipEnemy = this.objectPools.spaceshipEnemies.borrow();
-
-        if (!spaceshipEnemy) {
-            return;
-        }
-
-        spaceshipEnemy.position.y = Helpers.getRandomInteger(
-            spaceshipEnemy.height,
-            Config.WINDOW_HEIGHT - spaceshipEnemy.height
-        );
-        spaceshipEnemy.position.x = Config.WINDOW_WIDTH;
-        this.stage.addChild(spaceshipEnemy);
     }
 
     playState() {
@@ -227,11 +207,11 @@ export default class Main {
             this.gameState = this.playState;
             this.player.resetPosition();
             this.stage.addChild(this.player);
-            this.setSpaceshipEnemySpawner();
+            this.spaceShipEnemySpawner.start();
         });
 
         document.addEventListener('gameOver', () => {
-            clearInterval(this.spaceShipEnemySpawnerIntervalId);
+            this.spaceShipEnemySpawner.stop();
             this.gameState = Main.actionManagerUpdateState;
             this.emptyStage();
             this.gameOverScene.visible = true;
