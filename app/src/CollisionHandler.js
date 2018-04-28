@@ -1,3 +1,5 @@
+import RemoveSpritesEvent from "./Events/RemoveSpritesEvent";
+
 export default class CollisionHandler {
     static handlePlayerCollision(spaceshipEnemies, player) {
         let i = spaceshipEnemies.length;
@@ -11,12 +13,8 @@ export default class CollisionHandler {
                     CollisionHandler.packSpriteForRemoval(spaceshipEnemy, 'spaceshipEnemies'),
                     CollisionHandler.packSpriteForRemoval(player)
                 ];
-                const removeSpriteEvent = new CustomEvent('removeSprite', {
-                    detail: {
-                        sprites: spritesToRemove
-                    }
-                });
-                document.dispatchEvent(removeSpriteEvent);
+                const removeSpriteEvent = new RemoveSpritesEvent(document, spritesToRemove);
+                removeSpriteEvent.dispatch();
                 const gameOverEvent = new Event('gameOver');
                 document.dispatchEvent(gameOverEvent);
             }
@@ -35,12 +33,8 @@ export default class CollisionHandler {
                     CollisionHandler.packSpriteForRemoval(rocket, 'rockets')
                 ];
 
-                const removeSpriteEvent = new CustomEvent('removeSprite', {
-                    detail: {
-                        sprites: spritesToRemove
-                    }
-                });
-                document.dispatchEvent(removeSpriteEvent);
+                const removeSpriteEvent = new RemoveSpritesEvent(document, spritesToRemove);
+                removeSpriteEvent.dispatch();
             }
         }
     }

@@ -230,7 +230,7 @@ export default class Main {
             }, 3000);
         });
 
-        document.addEventListener('removeSprite', (event) => {
+        document.addEventListener('removeSprites', (event) => {
             const sprites = event.detail.sprites;
 
             let i = sprites.length;
