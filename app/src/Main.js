@@ -88,16 +88,18 @@ export default class Main {
     setPbuttonHandler() {
         let pButtonHandler = new KeyHandler(80);
         pButtonHandler.onPress = () => {
-            if (this.gameState !== this.pauseState) {
+            if (this.gameState === this.playState) {
                 this.gameState = this.pauseState;
                 this.pauseScene.visible = true;
                 this.spaceShipEnemySpawner.stop();
                 return;
             }
 
-            this.spaceShipEnemySpawner.start();
-            this.pauseScene.visible = false;
-            this.gameState = this.playState;
+            if (this.gameState === this.pauseState) {
+                this.spaceShipEnemySpawner.start();
+                this.pauseScene.visible = false;
+                this.gameState = this.playState;
+            }
         }
     }
 
