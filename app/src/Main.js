@@ -8,6 +8,7 @@ import SpaceshipEnemyObjectPool from './ObjectPools/SpaceshipEnemyObjectPool';
 import SpaceshipEnemy from "./AnimatedSprites/SpaceshipEnemy";
 import Rocket from "./AnimatedSprites/Rocket";
 import SceneHandler from "./SceneHandler";
+import CollisionHandler from "./CollisionHandler";
 
 export default class Main {
     constructor() {
@@ -19,6 +20,7 @@ export default class Main {
 
         this.stage = this.app.stage;
 
+        this.collisionHandler = null;
         this.parallaxScroller = new ParallaxScroller();
         this.player = null;
 
@@ -57,6 +59,7 @@ export default class Main {
         };
 
         this.player = new Player(Helpers.collectAnimatedSpriteFrames(4, 'spaceship', 'png'));
+        this.collisionHandler = new CollisionHandler(this.stage, this.player);
         this.addParticleContainers();
         this.setSpaceButtonHandler();
         this.setPbuttonHandler();
@@ -141,7 +144,7 @@ export default class Main {
         );
 
         this.player.handleMovement();
-        this.handlePlayerCollision(visibleSpaceshipEnemies);
+        this.collisionHandler.handlePlayerCollision(visibleSpaceshipEnemies);
         this.player.updateParticleContainerPosition();
 
         let i = this.stage.children.length;
@@ -195,21 +198,6 @@ export default class Main {
                 spaceshipEnemy.emitter.emit = true;
                 this.removeSprite(spaceshipEnemy, 'spaceshipEnemies');
                 this.removeSprite(rocket, 'rockets');
-            }
-        }
-    }
-
-    handlePlayerCollision(spaceshipEnemies) {
-        let i = spaceshipEnemies.length;
-        while (i--) {
-            const spaceshipEnemy = spaceshipEnemies[i];
-            if (this.player.isCollidesWith(spaceshipEnemy)) {
-                this.player.emitter.emit = true;
-                spaceshipEnemy.emitter.emit = true;
-                this.removeSprite(spaceshipEnemy, 'spaceshipEnemies');
-                this.stage.removeChild(this.player);
-                const gameOverEvent = new Event('gameOver');
-                document.dispatchEvent(gameOverEvent);
             }
         }
     }
@@ -274,6 +262,23 @@ export default class Main {
                     this.gameState = this.mainScreenState;
                 });
             }, 3000);
+        });
+
+        document.addEventListener('removeSprite', (event) => {
+            const sprites = event.detail.sprites;
+
+            let i = sprites.length;
+            while (i--) {
+                const spriteData = sprites[i];
+
+                this.stage.removeChild(spriteData.sprite);
+
+                if (spriteData.objectPool === null) {
+                    return;
+                }
+
+                this.removeSprite(spriteData.sprite, spriteData.objectPool);
+            }
         });
     }
 }
