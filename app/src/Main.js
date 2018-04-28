@@ -20,7 +20,7 @@ export default class Main {
 
         this.stage = this.app.stage;
 
-        this.collisionHandler = null;
+        this.collisionHandler = new CollisionHandler();
         this.parallaxScroller = new ParallaxScroller();
         this.player = null;
 
@@ -59,7 +59,6 @@ export default class Main {
         };
 
         this.player = new Player(Helpers.collectAnimatedSpriteFrames(4, 'spaceship', 'png'));
-        this.collisionHandler = new CollisionHandler(this.stage, this.player);
         this.addParticleContainers();
         this.setSpaceButtonHandler();
         this.setPbuttonHandler();
@@ -144,7 +143,7 @@ export default class Main {
         );
 
         this.player.handleMovement();
-        this.collisionHandler.handlePlayerCollision(visibleSpaceshipEnemies);
+        this.collisionHandler.handlePlayerCollision(visibleSpaceshipEnemies, this.player);
         this.player.updateParticleContainerPosition();
 
         let i = this.stage.children.length;

@@ -1,10 +1,5 @@
 export default class CollisionHandler {
-    constructor(stage, player) {
-        this.stage = stage;
-        this.player = player;
-    }
-
-    handlePlayerCollision(spaceshipEnemies) {
+    handlePlayerCollision(spaceshipEnemies, player) {
         let i = spaceshipEnemies.length;
         while (i--) {
             const spaceshipEnemy = spaceshipEnemies[i];
