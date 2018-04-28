@@ -51,7 +51,7 @@ changes and automatically triggers a build if needed:
 It is time to actually see the application in a browser! Run the following
 command to start an http server:
 ```bash
-./helpers/npm run http-server
+docker-compose up -d
 ```
 
 ### Without Docker
@@ -65,4 +65,5 @@ Use the npm scripts above without `./helpers/` prefix.
 
 To start the game, wait for the main menu to load. Press any of the GAME
 buttons, except EXIT. Use up, down, left and right arrow keys to control
-your spaceship, press space to fire a rocket.
+your spaceship, press space to fire a rocket. Pressing button "p" can pause
+the game, resume by pressing it again.
