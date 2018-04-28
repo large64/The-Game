@@ -93,9 +93,11 @@ export default class Main {
             if (this.gameState !== this.pauseState) {
                 this.gameState = this.pauseState;
                 this.pauseScene.visible = true;
+                clearInterval(this.spaceShipEnemySpawnerIntervalId);
                 return;
             }
 
+            this.setSpaceshipEnemySpawner();
             this.pauseScene.visible = false;
             this.gameState = this.playState;
         }
