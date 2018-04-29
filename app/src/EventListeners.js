@@ -1,5 +1,4 @@
-import Main from "./Main";
-import Helpers from "./Helpers";
+import GameStateManager from "./GameStateManager";
 
 export default class EventListeners {
     register() {
@@ -8,7 +7,7 @@ export default class EventListeners {
             this.objectPools.spaceshipEnemies.startMovementRandomizers();
             this.mainScreenScene.visible = false;
             this.gameOverScene.visible = false;
-            this.gameState = this.playState;
+            this.gameState = GameStateManager.playState.bind(this);
             this.player.resetPosition();
             this.stage.addChild(this.player);
             this.spaceShipEnemySpawner.start();
@@ -16,7 +15,7 @@ export default class EventListeners {
 
         document.addEventListener('gameOver', () => {
             this.spaceShipEnemySpawner.stop();
-            this.gameState = Main.actionManagerUpdateState;
+            this.gameState = GameStateManager.actionManagerUpdateState.bind(this);
             this.emptyStage();
             this.gameOverScene.visible = true;
             this.objectPools.spaceshipEnemies.stopMovementRandomizers();
@@ -29,7 +28,7 @@ export default class EventListeners {
                     this.gameOverScene.visible = false;
                     this.gameOverScene.alpha = 1;
                     this.mainScreenScene.visible = true;
-                    this.gameState = this.mainScreenState;
+                    this.gameState = GameStateManager.mainScreenState.bind(this);
                 });
             }, 3000);
         });

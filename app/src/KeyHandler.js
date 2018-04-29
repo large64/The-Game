@@ -31,4 +31,14 @@ export default class KeyHandler {
         }
         event.preventDefault();
     }
+
+    static setSpaceButtonHandler(callback) {
+        let spaceKeyHandler = new KeyHandler(32);
+        spaceKeyHandler.onPress = () => callback();
+    }
+
+    static setPbuttonHandler(callback) {
+        let pButtonHandler = new KeyHandler(80);
+        pButtonHandler.onPress = () => callback();
+    }
 }
