@@ -105,9 +105,7 @@ export default class Main {
             return;
         }
 
-        rocket.position.y = this.player.position.y + this.player.height - rocket.height;
-        rocket.position.x = this.player.position.x;
-        this.stage.addChild(rocket);
+        rocket.fire(this.stage, this.player);
     }
 
     removeSprite(sprite, objectPool) {
